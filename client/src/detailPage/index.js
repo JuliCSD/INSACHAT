@@ -1,15 +1,21 @@
 import React from "react";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+
+import userProfile from "../img/userProfile.png";
+
+import img11 from "../img/1/1.jpg";
+import img12 from "../img/1/2.jpg";
+import img13 from "../img/1/3.jpg";
+
+import img21 from "../img/2/1.jpg";
+import img22 from "../img/2/2.jpg";
+import img23 from "../img/2/3.jpg";
 
 
-import userProfile from "../../img/userProfile.png";
-import photo1 from "../..//img/photo1.jpg";
-import photo2 from "../..//img/photo2.jpg";
-import photo3 from "../..//img/photo3.jpg";
 
-const photos = [photo1, photo2, photo3];
 
-function ScrollPhotos({ currentImage, setCurrentImage }) {
+function ScrollPhotos({ currentImage, setCurrentImage, photolist }) {
   const handlePhoto = (photo) => {
     setCurrentImage(photo);
   };
@@ -17,7 +23,7 @@ function ScrollPhotos({ currentImage, setCurrentImage }) {
   return (
     <div className="photo-container">
       <div className="photo-list">
-        {photos.map((photo, index) => (
+        {photolist.map((photo, index) => (
           <img
             src={photo}
             alt={"photo" + (index + 1)}
@@ -50,7 +56,7 @@ function PhotoDetails({ currentImage }) {
 
   return (
     <div className="photo-details">
-      <img src={currentImage} alt="1" onClick={() => handleZoom({ photo1 })} />
+      <img src={currentImage} alt="1" onClick={() => handleZoom({ currentImage })} />
       {zoomedPhoto !== null && (
         <div className="zoomed-photo">
           <img src={currentImage} alt="Zoomed" onClick={handleZoomClose} />
@@ -74,12 +80,12 @@ function PhotoDetails({ currentImage }) {
   );
 }
 
-function InfoWrapper() {
+function InfoWrapper( {id}) {
   return (
     <div className="info-wrapper">
       <SellerWrapper />
       <ProductInfo />
-      <div className="seller-contact">Seller Contact</div>
+      <div className="seller-contact">Seller {id}</div>
     </div>
   );
 }
@@ -102,10 +108,11 @@ function SellerPhotoWrapper() {
   );
 }
 
-function ProductInfo() {
+function ProductInfo() {  
   return (
     <>
       <div className="product-info">
+    
         <h1>Product Title</h1>
         <h2>Price</h2>
       </div>
@@ -117,32 +124,28 @@ function ProductInfo() {
         nibh pharetra enim, at eleifend nisi odio aliquet ex. Suspendisse
         tincidunt et ex ut consequat. Ut pretium velit risus. Nulla ut tempor
         erat, sed facilisis massa. Quisque bibendum sed elit ut tincidunt.
-        Integer in rutrum nunc, quis tempor lacus. Morbi iaculis libero suscipit
-        turpis tempus, fringilla suscipit sem aliquet. Nulla lacus urna, rutrum
-        in pharetra non, luctus sed sem. Sed tincidunt lacus quis pharetra
-        bibendum. Mauris sed congue lorem, a ornare elit. Nunc turpis odio,
-        sagittis sed bibendum ac, consectetur in augue. Curabitur ultrices
-        sollicitudin rutrum. Pellentesque et diam enim. Aenean placerat ipsum at
-        maximus fringilla. Duis quis ultrices dolor. Donec sodales felis vitae
-        quam ornare ullamcorper. Ut non pretium felis. Cras dui ligula,
-        scelerisque ut condimentum id, rhoncus at leo. Orci varius natoque
-        penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam
-        urna augue, aliquam et iaculis sit amet, lobortis eget mauris. Cras sed
-        suscipit est. Nullam in ligula nibh. Duis at nulla massa. Morbi nec
-        luctus ante. Proin tempor et metus a rhoncus. Suspendisse tristique,
-        augue a efficitur mollis, nibh lectus aliquet lorem, sit amet dapibus
-        justo velit sit amet enim. Duis convallis venenatis dolor at sodales.
-        Suspendisse mattis fringilla nisl rhoncus tristique. Praesent hendrerit
-        ornare diam, nec hendrerit mi elementum vitae. Nullam sagittis ante in
-        arcu varius commodo. Aenean id neque fermentum, eleifend dui finibus,
-        convallis tortor.
+  
       </div>
     </>
   );
 }
 
-export default function DetailPage() {
-  const [currentImage, setCurrentImage] = useState(photo1);
+export default function DetailPage({ }) {
+  const { id } = useParams();
+  if(id == 1){
+    var img1 = img11;
+    var img2 = img12;
+    var img3 = img13;
+  }
+  else if(id == 2){
+    var img1 = img21;
+    var img2 = img22;
+    var img3 = img23;
+  }
+  const photos = [img1, img2, img3];
+
+
+  const [currentImage, setCurrentImage] = useState(img1);
 
   return (
     <div className="detailPage">
@@ -151,9 +154,10 @@ export default function DetailPage() {
         <ScrollPhotos
           currentImage={currentImage}
           setCurrentImage={setCurrentImage}
+          photolist = {photos}
         />
         <PhotoDetails currentImage={currentImage} />
-        <InfoWrapper />
+        <InfoWrapper id = {id} />
       </div>
       
     </div>

@@ -3,8 +3,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import logo from "../..//img/logo.png";
-import userProfile from "../..//img/userProfile.png";
+import logo from "../img/logo.png";
+import userProfile from "../img/userProfile.png";
 
 function Header() {
     return (
@@ -20,7 +20,7 @@ function Header() {
         </div>
         <div className="navigation">
           <Link to="/">Home</Link>
-          <Link to="/">Favorites</Link>
+          <Link to="/favorites">Favorites</Link>
           <Link to="/">Chats</Link>
         </div>
         <div className="profile">
