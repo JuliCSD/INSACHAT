@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/INSACHAT/static/css/main.69063ebd.css",
-    "main.js": "/INSACHAT/static/js/main.8dd46eb5.js",
-    "static/media/logo.png": "/INSACHAT/static/media/logo.896df83da63957576146.png",
-    "index.html": "/INSACHAT/index.html",
-    "main.69063ebd.css.map": "/INSACHAT/static/css/main.69063ebd.css.map",
-    "main.8dd46eb5.js.map": "/INSACHAT/static/js/main.8dd46eb5.js.map"
+    "main.css": "/static/css/main.f8fb8f8b.css",
+    "main.js": "/static/js/main.8198385f.js",
+    "static/media/logo.png": "/static/media/logo.896df83da63957576146.png",
+    "index.html": "/index.html",
+    "main.f8fb8f8b.css.map": "/static/css/main.f8fb8f8b.css.map",
+    "main.8198385f.js.map": "/static/js/main.8198385f.js.map"
   },
   "entrypoints": [
-    "static/css/main.69063ebd.css",
-    "static/js/main.8dd46eb5.js"
+    "static/css/main.f8fb8f8b.css",
+    "static/js/main.8198385f.js"
   ]
 }
