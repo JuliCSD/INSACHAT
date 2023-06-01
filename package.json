@@ -2,7 +2,7 @@
   "name": "insachat",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://julicsd.github.io/INSACHAT/",
+  "homepage": "https://julicsd.github.io/",
   "dependencies": {
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^1.0.6",
@@ -22,8 +22,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

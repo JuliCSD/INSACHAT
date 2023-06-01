@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ListProduits from "../components/ListProduits";
+import Bottomalert from "../components/Bottomalert";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import Cat from "../components/Cat";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -14,10 +17,18 @@ const Home = () => {
   }
 
   return (
+    <>
+    <Navbar />
+    
+    <Cat />
+
+    <Footer />
     <div className="home">
       <button onClick={handleCreerCompte}>Creer Compte</button>
-      <ListProduits />
+      <Bottomalert />
     </div>
+
+    </>
   );
 };
 

@@ -10,7 +10,7 @@ const ProfileDropDown = (props) => {
     const navigation = [
         { title: "Dashboard", path: "javascript:void(0)" },
         { title: "Settings", path: "javascript:void(0)" },
-        { title: "Log out", path: "javascript:void(0)" },
+        { title: "Log out", path: "/signin" },
     ]
 
     
@@ -80,7 +80,7 @@ export default () => {
                         <ul className="mt-12 space-y-5 lg:flex lg:space-x-6 lg:space-y-0 lg:mt-0">
                             {
                                 navigation.map((item, idx) => (
-                                    <li key={idx} className="text-gray-600 hover:text-gray-900">
+                                    <li key={idx} className="text-xl text-gray-600 hover:text-rose-500">
                                         <a href={item.path}>
                                             {item.title}
                                         </a>

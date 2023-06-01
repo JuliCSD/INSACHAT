@@ -2,6 +2,8 @@
 import React, { useState } from 'react'
 import { CheckIcon, QuestionMarkCircleIcon, ShieldCheckIcon, XIcon } from '@heroicons/react/solid'
 import { useParams } from 'react-router-dom'
+import Footer from "../components/Footer.js"
+import Navbar from '../components/Navbar.js'
 
 //il faudra implémenter la DB ici
 
@@ -36,6 +38,8 @@ const ProdDetail = () => {
   const emptyStars = 5 - Math.ceil(product.rating)
 
   return (
+    <>
+    <Navbar />
     <div className="mx-auto py-8 px-4 w-full max-w-7xl bg-white">
       <div className="mx-auto max-w-2xl lg:max-w-none grid grid-cols-2 gap-x-5">
 
@@ -126,6 +130,8 @@ const ProdDetail = () => {
 
       </div>
     </div>
+    <Footer />
+    </>
   )
 }
 
