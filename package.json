@@ -1,8 +1,8 @@
 {
   "name": "insachat",
   "version": "0.1.0",
-  "private": true,
-  "homepage": "https://julicsd.github.io/INSACHAT",
+  "private": false,
+  "homepage": "https://julicsd.github.io/",
   "dependencies": {
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^1.0.6",
