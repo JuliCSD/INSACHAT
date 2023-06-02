@@ -78,7 +78,7 @@ const products = [
         imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
         imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
         color: 'white',
-        size: 'xxl',
+        size: 'xl',
     },
     {
         id: 8,
@@ -93,10 +93,11 @@ const products = [
     // More products...
     ]
       
-
+  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedSize, setSelectedSize] = useState('');
     
   const filters = [
-    {
+    /*{
       id: 'brand',
       name: 'Brand',
       options: [
@@ -109,7 +110,8 @@ const products = [
         { value: 'zaram', label: 'Zaram' },
         { value: 'zebulus', label: 'Zebulus' },
       ],
-    },
+      setSelected: () => {},
+    },*/
     {
       id: 'color',
       name: 'Color',
@@ -122,6 +124,7 @@ const products = [
         { value: 'green', label: 'Green' },
         { value: 'red', label: 'Red' },
       ],
+      setSelected: setSelectedColor,
     },
     {
       id: 'size',
@@ -134,13 +137,13 @@ const products = [
         { value: 'xl', label: 'XL' },
         { value: 'xxl', label: 'XXL' },
       ],
+      setSelected: setSelectedSize,
     },
   ]
 
-  const [selectedColor, setSelectedColor] = useState('');
-
   const filteredProducts = products.filter((product) => {
-    return product.color === selectedColor || selectedColor === '';
+    return (product.color === selectedColor || selectedColor === '')
+          && (product.size === selectedSize || selectedSize === '');
   });
 
   return (
@@ -167,10 +170,10 @@ const products = [
                 <select 
                     name={filter.id} 
                     id={filter.id}
-                    defaultValue={'none'} 
-                    className="text-xl form-select w-full rounded border border-gray-300 bg-gray-100 text-base text-gray-600 focus:border-rose-500 focus:ring-rose-500"
-                    onChange={(e) => {setSelectedColor(e.target.value);
-                      }} // 
+                    defaultValue={''} 
+                    className="bg-rose-50 border border-white-300 text-sm rounded-lg focus:ring-rose-500 focus:border-rose-500 block w-full p-2 focus:border-rose-500 focus:ring-rose-500"
+                    onChange={(e) => {filter.setSelected(e.target.value);
+                      }}
                     >
                     <option value="" className="font-semibold">{filter.name}</option>
                     {filter.options.map(option => (

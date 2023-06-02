@@ -2,18 +2,16 @@ import React from 'react';
 
 const SignUp = () => {
     return (
-        <body class="font-medium bg-gradient-to-t from-white via-rose to-rose-200">
+        <body class="w-full py-10 px-1 sm:px-5 flex flex-col items-center bg-gradient-to-t from-white via-rose to-rose-200 font-body">
 
             <div class="container mx-auto">
                 <div class="flex justify-center px-6 my-12">
 
-                    <div class="w-full xl:w-3/4 lg:w-11/12 flex">
-
-                        <div
-                            class="w-full h-auto bg-gradient-to-t from-white via-rose to-rose-200 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
-                        ></div>
-
-                        <div class="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
+                    <div class="w-full xl:w-3/4 lg:w-11/12 flex justify-center overflow-hidden">
+                        <div className="relative hidden lg:block lg:col-span-1 w-full h-full bg-gray-200 rounded-2xl rounded-r-none">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSguBrHalb_LqfqDkOK-zos1tJ5RFBPmwdMWueQrhjjnQ&s" alt="" className="absolute w-full h-full object-contain"/>
+                        </div>
+                        <div class="w-full lg:w-7/12 bg-white p-5 rounded-2xl rounded-l-none">
                             <h3 class="pt-4 text-2xl text-center">Crée ton compte !</h3>
                             <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded">
                                 <div class="mb-4 md:flex md:justify-between">
