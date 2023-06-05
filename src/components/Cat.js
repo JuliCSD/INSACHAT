@@ -1,96 +1,14 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Switch } from '@headlessui/react'
 import { ViewGridIcon, ViewListIcon } from "@heroicons/react/solid"
 import ListProduits from './ListProduits'
+import axios from 'axios'
 
 
 const CategoryFilter4 = () => {
 
-
-const products = [
-    {
-        id: 1,
-        name: 'Matthias Pefferkorn',
-        href: '#',
-        price: '$840 (6 jeh)',
-        imageSrc: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSguBrHalb_LqfqDkOK-zos1tJ5RFBPmwdMWueQrhjjnQ&s',
-        imageAlt: 'Homme charismatique et beau gosse.',
-        color: 'yellow',
-        size: 'xs',
-    },
-    {
-        id: 2,
-        name: 'Nomad Tumbler',
-        href: '#',
-        price: '$35',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
-        imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
-        color: 'green',
-        size: 'L',
-    },
-    {
-        id: 3,
-        name: 'Focus Paper Refill',
-        href: '#',
-        price: '$89',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
-        imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-        color: 'white',
-        size: 'xxl',
-    },
-    {
-        id: 4,
-        name: 'Machined Mechanical Pencil',
-        href: '#',
-        price: '$35',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-        imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-        color: 'black',
-        size: 'sm',
-    },{
-        id: 5,
-        name: 'Matthias Pefferkorn',
-        href: '#',
-        price: '$840 (6 jeh)',
-        imageSrc: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSguBrHalb_LqfqDkOK-zos1tJ5RFBPmwdMWueQrhjjnQ&s',
-        imageAlt: 'Homme charismatique et beau gosse.',
-        color: 'yellow',
-        size: 'xs',
-    },
-    {
-        id: 6,
-        name: 'Nomad Tumbler',
-        href: '#',
-        price: '$35',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
-        imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
-        color: 'green',
-        size: 'L',
-    },
-    {
-        id: 7,
-        name: 'Focus Paper Refill',
-        href: '#',
-        price: '$89',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
-        imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-        color: 'white',
-        size: 'xl',
-    },
-    {
-        id: 8,
-        name: 'Machined Mechanical Pencil',
-        href: '#',
-        price: '$35',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-        imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-        color: 'purple',
-        size: 'sm',
-    },
-    // More products...
-    ]
-      
+  const [products, setProducts] = useState([]);
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedPrice, setSelectedPrice] = useState({min: "",
@@ -183,6 +101,16 @@ const products = [
       setSelected: setSelectedPrice,
     }
   ]
+  const readAnnonces = () => {
+    axios.get('http://localhost:5000/readAnnonces')
+      .then(response => {
+        setProducts(response.data);
+      })
+      .catch(error => console.log(error));
+  }
+  useEffect(() => {
+    readAnnonces();
+  }, []);
 
   const filteredProducts = products.filter((product) => {
     return (product.color === selectedColor || selectedColor === '')
