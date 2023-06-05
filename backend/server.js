@@ -27,6 +27,27 @@ app.get('/readDatabase', async (req, res) => {
     }
   });
 
+  app.get('/readAnnonces', async (req, res) => {
+    const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority"
+    const client = new MongoClient(uri);
+  
+    try {
+      await client.connect();
+      const database = client.db('insachat');
+      const collection = database.collection('annonces');
+  
+      const annonces = await collection.find().toArray();
+      console.log(annonces);
+      
+      res.status(200).send(annonces);
+    } catch (error) {
+      console.error('An error occurred while attempting to connect to MongoDB', error);  // Log the error
+      res.status(500).send(error);
+    } finally {
+      await client.close();
+    }
+  });
+
 app.post('/addUser', async (req, res) => {
   const user = req.body;
 
