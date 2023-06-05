@@ -5,6 +5,8 @@ import CreerCompte from "./pages/CreerCompte";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/CreationCompte";
 import NotFound from "./pages/NotFound";
+import CreerProduit from "./pages/CreerProduit";
+
 
 import { Route, Routes } from "react-router-dom";
 
@@ -21,7 +23,7 @@ const App = () => {
           <Route path="/product/:id" element={<ProdDetail />} />
           <Route path="/CreerCompte" element={<CreerCompte />} />
           <Route path="*" element={<NotFound />} />
-
+          {/* <Route path="/CreerProduit" element={<CreerProduit />} /> */}
         </Routes>
       </main>
 

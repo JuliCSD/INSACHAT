@@ -5,20 +5,20 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Cat from "../components/Cat";
 
-const Home = () => {
-  const navigate = useNavigate();
-  const [CreerCompte, setCreerCompte] = useState(false);  
 
-  const handleCreerCompte = () => {
-    // Set the state or do any other pre-redirect tasks
-    setCreerCompte(true);
-    // Redirect to CreerCompte page
-    navigate("/CreerCompte");
-  }
+const Home = () => {
+
+
+  
 
   return (
+
+
+    
     <>
+    
     <Navbar />
+    
     
     <Cat />
 
