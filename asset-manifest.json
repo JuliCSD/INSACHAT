@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/INSACHAT/static/css/main.bbe47a9f.css",
-    "main.js": "/INSACHAT/static/js/main.10879a36.js",
+    "main.css": "/INSACHAT/static/css/main.c6aff6f2.css",
+    "main.js": "/INSACHAT/static/js/main.ad2391bc.js",
     "static/media/logo.png": "/INSACHAT/static/media/logo.896df83da63957576146.png",
     "index.html": "/INSACHAT/index.html",
-    "main.bbe47a9f.css.map": "/INSACHAT/static/css/main.bbe47a9f.css.map",
-    "main.10879a36.js.map": "/INSACHAT/static/js/main.10879a36.js.map"
+    "main.c6aff6f2.css.map": "/INSACHAT/static/css/main.c6aff6f2.css.map",
+    "main.ad2391bc.js.map": "/INSACHAT/static/js/main.ad2391bc.js.map"
   },
   "entrypoints": [
-    "static/css/main.bbe47a9f.css",
-    "static/js/main.10879a36.js"
+    "static/css/main.c6aff6f2.css",
+    "static/js/main.ad2391bc.js"
   ]
 }
