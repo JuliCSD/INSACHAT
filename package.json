@@ -2,7 +2,7 @@
   "name": "insachat",
   "version": "0.1.0",
   "private": false,
-  "homepage": "https://julicsd.github.io/",
+  "homepage": "http://delayel06.github.io/INSACHAT",
   "dependencies": {
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^1.0.6",
@@ -17,6 +17,7 @@
     "react-icons": "^4.8.0",
     "react-router-dom": "^6.10.0",
     "react-scripts": "^5.0.1",
+    "tw-elements": "^1.0.0-beta2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

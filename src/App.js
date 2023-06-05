@@ -4,6 +4,7 @@ import ProdDetail from "./pages/prodDetail";
 import CreerCompte from "./pages/CreerCompte";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/CreationCompte";
+import NotFound from "./pages/NotFound";
 
 import { Route, Routes } from "react-router-dom";
 
@@ -19,6 +20,8 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProdDetail />} />
           <Route path="/CreerCompte" element={<CreerCompte />} />
+          <Route path="*" element={<NotFound />} />
+
         </Routes>
       </main>
 

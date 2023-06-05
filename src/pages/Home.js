@@ -7,7 +7,7 @@ import Cat from "../components/Cat";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [CreerCompte, setCreerCompte] = useState(false);
+  const [CreerCompte, setCreerCompte] = useState(false);  
 
   const handleCreerCompte = () => {
     // Set the state or do any other pre-redirect tasks
@@ -24,7 +24,7 @@ const Home = () => {
 
     <Footer />
     <div className="home">
-      <button onClick={handleCreerCompte}>Creer Compte</button>
+    
       <Bottomalert />
     </div>
 

@@ -1,7 +1,6 @@
 
 import React, { useRef } from 'react'
 import { ChevronLeftIcon } from '@heroicons/react/solid'
-import { Link } from 'react-router-dom' 
 
 const SignForm2 = () => {
 
@@ -25,14 +24,18 @@ const SignForm2 = () => {
         <div className="col-span-2 lg:col-span-1 py-10 px-10">
 
           {/* :::Login form */}
-          <form action="" className="flex flex-col items-right justify-end" onSubmit={handleSubmit}>
-          <Link to="/" >
-            <button className="flex items-center space-x-1 text-gray-600 hover:text-rose-800">
+          <a href="/" >
+            <button className="flex items-center space-x-1 text-gray-600 hover:text-rose-800 py-4">
             <ChevronLeftIcon className="w-5 h-5" />
             <span>Back</span>
           
           </button>
-          </Link>
+          </a>
+
+
+
+          <form action="" className="flex flex-col items-right justify-end" onSubmit={handleSubmit}>
+         
             {/* Email */}
             <div className="my-2 px-2 flex items-center border border-gray-300 rounded">
               <span className="pl-2 pr-4 border-r border-gray-200">

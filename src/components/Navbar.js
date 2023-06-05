@@ -8,9 +8,9 @@ const ProfileDropDown = (props) => {
     const profileRef = useRef()
 
     const navigation = [
-        { title: "Dashboard", path: "javascript:void(0)" },
-        { title: "Settings", path: "javascript:void(0)" },
-        { title: "Log out", path: "/signin" },
+        { title: "Dashboard", path: "/dashboard" },
+        { title: "Settings", path: "/settings" },
+        { title: "Sign in", path: "/signin" },
     ]
 
     
@@ -41,7 +41,7 @@ const ProfileDropDown = (props) => {
                 {
                     navigation.map((item, idx) => (
                         <li>
-                            <a key={idx} className="block text-gray-600 lg:hover:bg-gray-50 lg:p-2.5" href={item.path}>
+                            <a key={idx} className="block text-gray-600 lg:hover:bg-gray-50 lg:p-1.5" href={item.path}>
                                 {item.title}
                             </a>
                         </li>
