@@ -2,7 +2,7 @@
   "name": "insachat",
   "version": "0.1.0",
   "private": false,
-  "homepage": "http://delayel06.github.io/INSACHAT",
+  "homepage": "http://delayel06.github.io/",
   "dependencies": {
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^1.0.6",
