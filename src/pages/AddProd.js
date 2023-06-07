@@ -59,7 +59,17 @@
                                         </label>
                                     </div>
                                     <div class="md:w-2/3 grid grid-cols-2 gap-2">
-                                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-number" type="number" placeholder="jaune"/>
+                                        
+                                        <select class=" bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder='Couleur'>
+                                            <option></option>
+                                            <option>Noir</option>
+                                            <option>Jaune</option>
+                                            <option>Blanc</option>
+                                            <option>Bleu</option>
+                                            <option>Vert</option>
+                                            <option>Rouge</option>
+                                        </select>
+                                     
                                     </div>
                                 </div>
                                 <br></br>
@@ -72,7 +82,16 @@
                                         </label>
                                     </div>
                                     <div class="md:w-2/3 grid grid-cols-2 gap-2">
-                                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-number" type="number" placeholder="xs"/>
+                                        <select class=" bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder='Couleur'>
+                                            <option></option>
+                                            <option>XS</option>
+                                            <option>S</option>
+                                            <option>M</option>
+                                            <option>L</option>
+                                            <option>XL</option>
+                                            <option>XXL</option>
+                                        </select>
+
                                     </div>
                                 </div>
                                 <br></br>
