@@ -48,6 +48,32 @@ app.get('/readDatabase', async (req, res) => {
     }
   });
 
+  app.get('/readProduct/:id', async (req, res) => {
+    const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority"
+    const client = new MongoClient(uri);
+  
+    console.log(`Received request to get product with id: ${req.params.id}`);
+    
+    try {
+      await client.connect();
+      const database = client.db('insachat');
+      const collection = database.collection('annonces');
+      
+      const query = { _id: new ObjectId(req.params.id) };  // Create a query with the hardcoded ID
+  
+      const produit = await collection.findOne(query);
+      console.log(`Found product in database: ${JSON.stringify(produit)}`);
+      
+      res.status(200).send(produit);
+    } catch (error) {
+      console.error('An error occurred while attempting to connect to MongoDB', error);  // Log the error
+      res.status(500).send(error);
+    } finally {
+      await client.close();
+    }
+  });
+  
+
 app.post('/addUser', async (req, res) => {
   const user = req.body;
 

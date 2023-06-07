@@ -1,9 +1,10 @@
 
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { CheckIcon, QuestionMarkCircleIcon, ShieldCheckIcon, XIcon } from '@heroicons/react/solid'
 import { useParams } from 'react-router-dom'
 import Footer from "../components/Footer.js"
 import Navbar from '../components/Navbar.js'
+import axios from 'axios'
 
 //il faudra implémenter la DB ici
 
@@ -12,6 +13,33 @@ const ProdDetail = () => {
   const { id } = useParams();
 
 
+  const [prod, setProd] = useState({
+    _id: "",
+    name: "",
+    href: "",
+    price: "",
+    imageSrc: "",
+    imageAlt: "",
+    color: "",
+  });
+
+  const readProduct = () => {
+    console.log(`Getting product with id: ${id}`);
+    
+    axios.get(`http://localhost:5000/readProduct/${id}`)
+      .then(response => {
+        setProd(response.data);
+        console.log(`Response from server: ${JSON.stringify(response.data)}`);
+        console.log(`Product in state: ${JSON.stringify(prod)}`);
+      })
+      .catch(error => console.log(`Error getting product: ${error}`));
+  }
+  
+
+  useEffect(() => {
+    readProduct();
+  }, []);
+  
   const product = {
     name: "Test",
     price: id, //test to see if the id is passed
@@ -45,7 +73,7 @@ const ProdDetail = () => {
 
         {/* :PRODUCT PICTURE */}
         <div className="order-first lg:order-last col-span-full lg:col-span-1 relative rounded-sm border-2 border-gray-200">
-          <img src={product.picture} alt={product.alt} className="object-contain w-full h-80 lg:h-full" />
+          <img src={prod.imageSrc} alt={prod.imageAlt} className="object-contain w-full h-80 lg:h-full" />
         </div>
 
 
@@ -53,11 +81,11 @@ const ProdDetail = () => {
         {/* :PRODUCT DETAILS */}
         <div className="order-last lg:order-first col-span-full lg:col-span-1 lg:max-w-xl flex flex-col items-start">
           {/* ::Name */}
-          <h1 className="text-3xl sm:text-4xl text-gray-700 font-extrabold tracking-wide">{product.name}</h1>
+          <h1 className="text-3xl sm:text-4xl text-gray-700 font-extrabold tracking-wide">{prod.name}</h1>
           {/* ::Price & Rating */}
           <div className="mt-5 flex items-center">
             {/* :::Price */}
-            <p className="pr-5 border-r border-gray-200 text-2xl text-gray-700 font-normal">{`$ ${product.price}`}</p>
+            <p className="pr-5 border-r border-gray-200 text-2xl text-gray-700 font-normal">{` ${prod.price}`}</p>
             {/* :::Reviews */}
             <div className="pl-5 pr-3 flex items-center">
               {/* ::::rating stars */}
