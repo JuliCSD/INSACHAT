@@ -6,6 +6,8 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/CreationCompte";
 import NotFound from "./pages/NotFound";
 
+
+
 import { Route, Routes } from "react-router-dom";
 
 const App = () => {
@@ -21,7 +23,6 @@ const App = () => {
           <Route path="/product/:id" element={<ProdDetail />} />
           <Route path="/CreerCompte" element={<CreerCompte />} />
           <Route path="*" element={<NotFound />} />
-
         </Routes>
       </main>
 
