@@ -51,6 +51,32 @@
                                 </div>
                                 <br></br>
 
+                                <div>
+                                    <div>
+                                        <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" >
+                                            Couleur
+                                            
+                                        </label>
+                                    </div>
+                                    <div class="md:w-2/3 grid grid-cols-2 gap-2">
+                                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-number" type="number" placeholder="jaune"/>
+                                    </div>
+                                </div>
+                                <br></br>
+
+                                <div>
+                                    <div>
+                                        <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" >
+                                            Taille
+                                            
+                                        </label>
+                                    </div>
+                                    <div class="md:w-2/3 grid grid-cols-2 gap-2">
+                                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-number" type="number" placeholder="xs"/>
+                                    </div>
+                                </div>
+                                <br></br>
+
 
                                 <div>
                                     <div>
