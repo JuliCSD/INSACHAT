@@ -1,6 +1,38 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 
 const SignUp = () => {
+    const [userInput, setUserInput] = useState({
+        prenom: '',
+        nom: '',
+        email: '',
+        password : '',
+  });
+
+
+    const handleInputChange = (event) => {
+        setUserInput({
+        ...userInput,
+        [event.target.name]: event.target.value
+        });
+    }
+
+    const addUser = () => {
+        const user = {
+          ...userInput,
+        };
+        axios.post('http://localhost:5000/addUser', user)
+          .then(response => {
+            console.log(response);
+            setUserInput({
+              prenom: '',
+              nom: '',
+              email: '',
+              password: '',
+            });
+          })
+          .catch(error => console.log(error));
+      }
     return (
         <body class="w-full py-10 px-1 sm:px-5 flex flex-col items-center bg-gradient-to-t from-white via-rose to-rose-200 font-body">
 
@@ -23,7 +55,10 @@ const SignUp = () => {
                                             class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                             id="Prénom"
                                             type="text"
+                                            name="prenom"
                                             placeholder="Prénom"
+                                            value={userInput.prenom}
+                                            onChange={handleInputChange}
                                         />
                                     </div>
                                     <div class="md:ml-2">
@@ -33,8 +68,11 @@ const SignUp = () => {
                                         <input
                                             class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                             id="Nom"
+                                            name="nom"
                                             type="text"
                                             placeholder="Nom"
+                                            value={userInput.nom}
+                                            onChange={handleInputChange}
                                         />
                                     </div>
                                 </div>
@@ -45,8 +83,11 @@ const SignUp = () => {
                                     <input
                                         class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                         id="email"
+                                        name="email"
                                         type="email"
                                         placeholder="Email"
+                                        value={userInput.email}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                                 <div class="mb-4 md:flex md:justify-between">
@@ -57,8 +98,11 @@ const SignUp = () => {
                                         <input
                                             class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                             id="password"
+                                            name="password"
                                             type="password"
                                             placeholder="******************"
+                                            value={userInput.password}
+                                            onChange={handleInputChange}
                                         />
                                         <p class="text-xs italic text-red-500">Choisissez un mot de passe !</p>
                                     </div>
@@ -78,6 +122,7 @@ const SignUp = () => {
                                     <button
                                         class="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
                                         type="button"
+                                        onClick={addUser}
                                     >
                                         Créer son compte
                                     </button>
