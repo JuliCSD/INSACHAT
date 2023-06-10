@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ListProduits from './ListProduits';
 import axios from 'axios';
 
+import { ChevronDownIcon } from '@heroicons/react/solid'
+
 const CategoryFilter4 = () => {
+  const dropdownRef = useRef(null);
   const [products, setProducts] = useState([]);
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedPrice, setSelectedPrice] = useState({ min: '', max: '' });
+  const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true); // Add isLoading state
 
   const handleMinPriceChange = (e) => {
@@ -17,10 +21,22 @@ const CategoryFilter4 = () => {
     setSelectedPrice({ min: selectedPrice.min, max: e.target.value });
   };
 
+  const handleDropdownClick = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      console.log("click outside");
+      setIsOpen(false);
+    }
+  };
+
   const filters = [
     {
       id: 'color',
       name: 'Color',
+      type:'select',
       options: [
         { value: 'black', label: 'Black' },
         { value: 'yellow', label: 'Yellow' },
@@ -36,6 +52,7 @@ const CategoryFilter4 = () => {
     {
       id: 'size',
       name: 'Size',
+      type:'select',
       options: [
         { value: 'xs', label: 'XS' },
         { value: 'sm', label: 'SM' },
@@ -53,6 +70,7 @@ const CategoryFilter4 = () => {
       options: [
         {
           value: selectedPrice.min,
+          type:'range',
           label:
             <input
               type="range"
@@ -96,12 +114,19 @@ const CategoryFilter4 = () => {
 
   useEffect(() => {
     readAnnonces();
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
   }, []);
 
   const filteredProducts = products.filter((product) => {
+    
     return (
       (product.color === selectedColor || selectedColor === '') &&
       (product.size === selectedSize || selectedSize === '')
+          && (parseInt(product.price.replace("$", "")) >= parseInt(selectedPrice.min) || selectedPrice.min === '')
+          && (parseInt(product.price.replace("$", "")) <= parseInt(selectedPrice.max) || selectedPrice.max === '')
     );
   });
 
@@ -126,12 +151,13 @@ const CategoryFilter4 = () => {
             {/* ::Filter Select Input */}
             <div className="flex-shrink-0 mt-5 md:mt-0 max-w-sm sm:max-w-none w-full md:w-auto grid sm:grid-flow-col grid-cols-1 sm:auto-cols-fr gap-8">
               {filters.map((filter) => (
+                filter.type === 'select' && (
                 <div key={filter.id}>
                   <select
                     name={filter.id}
                     id={filter.id}
                     defaultValue={''}
-                    className="bg-rose-50 border border-white-300 text-sm rounded-lg focus:ring-rose-500 focus:border-rose-500 block w-full p-2 focus:border-rose-500 focus:ring-rose-500"
+                    className="bg-rose-50 border border-white-300 text-sm rounded-lg focus:ring-rose-500 block w-full p-2 focus:border-rose-500 focus:ring-rose-500 hover:scale-105 cursor-pointer ease-in-out duration-200"
                     onChange={(e) => {
                       filter.setSelected(e.target.value);
                     }}
@@ -146,7 +172,41 @@ const CategoryFilter4 = () => {
                     ))}
                   </select>
                 </div>
-              ))}
+              )))}
+              <div className="relative select-none" ref={dropdownRef}>
+        <div className={classNames("flex items-center justify-between bg-rose-50 border border-white-300 text-sm rounded-lg ${isOpen ? ring-rose-500 block w-full p-2 border-rose-500 ring-rose-500} hover:scale-105 cursor-pointer ease-in-out duration-200")} onClick={handleDropdownClick}>
+        <span className="mr-2">Price Range</span>
+        <ChevronDownIcon className="-mr-1 h-4 w-4" aria-hidden="true" />
+        </div>
+        {isOpen && (
+          <div className="absolute z-10 bg-white border border-gray-300 p-4 mt-2">
+            <div className="flex">
+              <label htmlFor="minPriceSlider">Min</label>
+              <input
+                type="range"
+                id="minPriceSlider"
+                min={0}
+                max={selectedPrice.max}
+                value={selectedPrice.min}
+                onChange={handleMinPriceChange}
+              />
+              {selectedPrice.min}$
+            </div>
+            <div className='flex'>
+              <label htmlFor="maxPriceSlider">Max</label>
+              <input
+                type="range"
+                id="maxPriceSlider"
+                min={selectedPrice.min}
+                max={1000}
+                value={selectedPrice.max}
+                onChange={handleMaxPriceChange}
+              />
+              {selectedPrice.max}$
+            </div>
+          </div>
+        )}
+      </div>  
             </div>
             <div className="flex-grow ml-5 w-full flex items-center justify-around md:justify-between space-x-4"></div>
           </div>
