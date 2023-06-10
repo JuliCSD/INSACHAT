@@ -1,19 +1,47 @@
     import React, { useState } from 'react';
 
     function AddProd() { 
-        const [photosUp, setPhotosUp] = useState(false);
 
-        const tooglePhotosUp = () =>{
-            setPhotosUp(!photosUp)
-        }
+        const [formData, setFormData] = useState({
+            name: '',
+            price: '',
+            color: '',
+            size: '',
+            description: '',
+            photos: null,
+          });
 
-        const show = photosUp ? "visible absolute items-center":"invisible absolute items-center";  
-
-        const handleFileUpload = (event) => {
-            const file = event.target.files[0];
-            console.log('File uploaded:', file);
-        };
-
+          const handleInputChange = (event) => {
+            setFormData({
+              ...formData,
+              [event.target.name]: event.target.value,
+            });
+          };
+        
+          const handleFileUpload = (event) => {
+            setFormData({
+              ...formData,
+              photos: event.target.files[0],
+            });
+          };
+        
+          const handleSubmit = (event) => {
+            event.preventDefault();
+            // Perform form submission logic here
+            console.log(formData);
+            // Reset the form data
+            setFormData({
+              name: '',
+              price: '',
+              color: '',
+              size: '',
+              description: '',
+              photos: null,
+            });
+          };
+         
+ 
+        
         return ( 
 
         <body class="w-full py-10 px-1 sm:px-5 flex flex-col items-center bg-gradient-to-t from-white via-rose to-rose-200 font-body">
@@ -23,7 +51,7 @@
                         <div class="w-full lg:w-7/12 bg-white p-5 rounded-2xl rounded-l-none">
                             <h3 class="pt-4 text-2xl text-center">Vendre</h3>
 
-                            <form class="w-full max-w-sm">
+                            <form class="w-full max-w-sm" onSubmit={handleSubmit}>
                                 <div>
                                     <div>
                                         <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" >
@@ -32,7 +60,14 @@
                                     </div>
 
                                     <div class="md:w-2/3">
-                                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-name" type="text" placeholder="Baskets adidas - 39.5"/>
+                                    <input
+                                    className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                    name="name"
+                                    type="text"
+                                    placeholder="Baskets adidas - 39.5"
+                                    value={formData.name}
+                                    onChange={handleInputChange}
+                                    />
                                     </div>
                                 </div>
                                 <br></br>
@@ -41,11 +76,16 @@
                                     <div>
                                         <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" >
                                             Prix
-                                            
                                         </label>
                                     </div>
                                     <div class="md:w-2/3 grid grid-cols-2 gap-2">
-                                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-number" type="number" placeholder="10"/>
+                                        <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+                                        id="inline-number" 
+                                        type="number" 
+                                        placeholder="10"
+                                        value={formData.price}
+                                        onChange={handleInputChange}
+                                        />
                                         <div class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4">€</div>
                                     </div>
                                 </div>
@@ -125,7 +165,7 @@
                                         </label>
                                     </form>
 
-                                    <button class="shadow bg-rose-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button"  onClick={tooglePhotosUp}>
+                                    <button class="shadow bg-rose-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
                                         Télécharger photos
                                     </button>
                                     
@@ -137,9 +177,12 @@
                                 <div class="md:flex md:items-center">
                                     <div class="md:w-1/3"></div>
                                         <div class="md:w-2/3">
-                                            <button class="shadow bg-rose-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
-                                                Valider
-                                            </button>
+                                        <button
+                                        className="shadow bg-rose-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                                        type="submit"
+                                        >
+                                            Valider
+                                        </button>
                                     </div>
                                 </div>
 
@@ -156,3 +199,4 @@
     }
 
     export default AddProd;
+
