@@ -1,16 +1,60 @@
 
-import React, { useRef } from 'react'
+import React, { useRef,useState, useEffect } from 'react'
 import { ChevronLeftIcon } from '@heroicons/react/solid'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 const SignForm2 = () => {
+  const navigate = useNavigate();
 
-  const emailRef = useRef() 
-  const passwordRef = useRef()
-  const handleSubmit = () => {
-    /*
-     Do something here !
-     */
+  const [userInput, setUserInput] = useState({
+    email: '',
+    password: '',
+  });
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('no token');
+    } else {
+      console.log('token found');
+      axios.get('http://localhost:5000/verifyToken', { headers: { "x-access-token": token } })
+      .then(response => {
+          console.log(response);
+          navigate('/');
+      })
+      .catch(error => {
+          localStorage.removeItem('token');
+      });
+    }
+  }, []);
+
+  const handleInputChange = (event) => {
+    setUserInput({
+        ...userInput,
+        [event.target.name]: event.target.value
+    });
+  };
+
+  const handleSubmit = (event) => {
+    const user = {
+      ...userInput,
+  };
+  axios.post('http://localhost:5000/login', user)
+      .then(response => {
+          console.log(response);
+          localStorage.setItem('token', response.data.token); // store token in local storage
+          console.log('token stored');
+          console.log(response.data.token);
+          setUserInput({
+              email: '',
+              password: '',
+          });
+          navigate('/');
+      })
+      .catch(error => console.log(error));
+    event.preventDefault();
   } 
+
 
   return (
     <div className="w-full py-10 px-1 sm:px-5 flex flex-col items-center bg-gradient-to-t from-white via-rose to-rose-200 font-body"> {/* Container */}
@@ -44,7 +88,7 @@ const SignForm2 = () => {
                 </svg>
               </span>
               <label htmlFor="email" className="py-2">
-              <input ref={emailRef} id="email" type="email" name="email" className="form-input h-8 py-5 px-5 border-none text-yellow-600 focus:ring-0 focus:outline-none" placeholder="Email" required/>
+              <input id="email" type="email" name="email" onChange={handleInputChange} className="form-input h-8 py-5 px-5 border-none text-yellow-600 focus:ring-0 focus:outline-none" placeholder="Email" required/>
               </label>
             </div>
             {/* Password */}
@@ -55,7 +99,7 @@ const SignForm2 = () => {
                 </svg>
               </span>
               <label htmlFor="password" className="py-2">
-              <input ref={passwordRef} id="password" type="password" name="password" className="form-input h-8 py-5 px-5 border-none text-yellow-600 focus:ring-0 focus:outline-none" placeholder="Mot de Passe" required/>
+              <input id="password" type="password" name="password" onChange={handleInputChange} className="form-input h-8 py-5 px-5 border-none text-yellow-600 focus:ring-0 focus:outline-none" placeholder="Mot de Passe" required/>
               </label>
             </div>
             {/* Options and Login */}
@@ -120,5 +164,4 @@ const SignForm2 = () => {
     </div>
   )
 }
-
 export default SignForm2
