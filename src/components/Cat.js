@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import ListProduits from './ListProduits';
 import axios from 'axios';
 
 import { ChevronDownIcon } from '@heroicons/react/solid'
 
-const CategoryFilter4 = ({ currentSearch, setCurrentSearch }) => {
+const CategoryFilter4 = () => {
   const dropdownRef = useRef(null);
   const [products, setProducts] = useState([]);
   const [selectedColor, setSelectedColor] = useState('');
@@ -12,6 +13,9 @@ const CategoryFilter4 = ({ currentSearch, setCurrentSearch }) => {
   const [selectedPrice, setSelectedPrice] = useState({ min: '', max: '' });
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const location = useLocation();
+  const searchQuery = new URLSearchParams(location.search).get('query');
 
   const handleMinPriceChange = (e) => {
     setSelectedPrice({ min: e.target.value, max: selectedPrice.max });
@@ -99,7 +103,7 @@ const CategoryFilter4 = ({ currentSearch, setCurrentSearch }) => {
       && (product.size === selectedSize || selectedSize === '')
       && (parseInt(product.price.replace("$", "")) >= parseInt(selectedPrice.min) || selectedPrice.min === '')
       && (parseInt(product.price.replace("$", "")) <= parseInt(selectedPrice.max) || selectedPrice.max === '')
-      && (product.name.toLowerCase().includes(currentSearch.toLowerCase()) || currentSearch === '')
+      && (searchQuery === null || product.name.toLowerCase().includes(searchQuery.toLowerCase()))
     );
   });
 

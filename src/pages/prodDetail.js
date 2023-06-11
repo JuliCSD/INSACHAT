@@ -8,7 +8,7 @@ import axios from 'axios'
 
 //il faudra implémenter la DB ici
 
-const ProdDetail = ({ currentSearch, setCurrentSearch }) => {
+const ProdDetail = () => {
 
   const { id } = useParams();
 
@@ -59,7 +59,7 @@ const ProdDetail = ({ currentSearch, setCurrentSearch }) => {
 
   return (
     <>
-    <Navbar currentSearch={currentSearch} setCurrentSearch={setCurrentSearch}/>
+    <Navbar />
     <div className="mx-auto py-8 px-4 w-full max-w-7xl bg-white">
       <div className="mx-auto max-w-2xl lg:max-w-none grid grid-cols-2 gap-x-5">
 

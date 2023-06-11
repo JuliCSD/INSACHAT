@@ -1,12 +1,14 @@
-import { useState, useRef, useEffect } from "react"
-import logo from '../images/logo.png'
-import fav from '../images/fav.png'
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import logo from '../images/logo.png';
+import fav from '../images/fav.png';
 
 
-export default ({ currentSearch, setCurrentSearch }) => {
+export default () => {
 
     const [menuState, setMenuState] = useState(false)
     const [searchValue, setSearchValue] = useState('');
+    const navigate = useNavigate();
 
     const handleChange = (event) => {
         setSearchValue(event.target.value);
@@ -18,13 +20,8 @@ export default ({ currentSearch, setCurrentSearch }) => {
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
-            setCurrentSearch(searchValue);
-            window.location.href = '/';
+            navigate(`/?query=${encodeURIComponent(searchValue)}`);
         }
-    };
-
-    const resetSearch = () => {
-        setCurrentSearch('');
     };
 
   const navigation = [
@@ -34,7 +31,7 @@ export default ({ currentSearch, setCurrentSearch }) => {
         <nav className="bg-white border-b py-0">
             <div className="flex items-center space-x-0 py-1 px-0 max-w-screen-xl mx-auto md:px-8">
                 <div className="flex-none lg:flex-initial">
-                    <a href="/" onClick={resetSearch}>
+                    <a href="/">
                         <img
                             src={logo}
                             width={243} 
