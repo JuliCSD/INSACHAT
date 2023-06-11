@@ -6,8 +6,7 @@ import Footer from "../components/Footer";
 import Cat from "../components/Cat";
 
 
-const Home = () => {
-  const [currentSearch, setCurrentSearch] = useState('');
+const Home = ({ currentSearch, setCurrentSearch }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -30,7 +29,7 @@ const Home = () => {
     <Navbar currentSearch={currentSearch} setCurrentSearch={setCurrentSearch}/>
     
     
-    <Cat />
+    <Cat currentSearch={currentSearch} setCurrentSearch={setCurrentSearch}/>
 
     <Footer />
     <div className="home">

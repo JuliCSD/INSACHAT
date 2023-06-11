@@ -8,16 +8,23 @@ export default ({ currentSearch, setCurrentSearch }) => {
     const [menuState, setMenuState] = useState(false)
     const [searchValue, setSearchValue] = useState('');
 
+    const handleChange = (event) => {
+        setSearchValue(event.target.value);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+      };
+
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
-            console.log('enter');
             setCurrentSearch(searchValue);
+            window.location.href = '/';
         }
     };
 
-    const handleChange = (event) => {
-        setSearchValue(event.target.value);
-        console.log(currentSearch);
+    const resetSearch = () => {
+        setCurrentSearch('');
     };
 
   const navigation = [
@@ -27,7 +34,7 @@ export default ({ currentSearch, setCurrentSearch }) => {
         <nav className="bg-white border-b py-0">
             <div className="flex items-center space-x-0 py-1 px-0 max-w-screen-xl mx-auto md:px-8">
                 <div className="flex-none lg:flex-initial">
-                    <a href="/">
+                    <a href="/" onClick={resetSearch}>
                         <img
                             src={logo}
                             width={243} 
@@ -50,7 +57,7 @@ export default ({ currentSearch, setCurrentSearch }) => {
                         </ul>
                     </div>
                     
-                        <form className="flex items-center space-x-2 border rounded-md p-2">
+                        <form onSubmit={handleSubmit} className="flex items-center space-x-2 border rounded-md p-2">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 flex-none text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
@@ -59,7 +66,7 @@ export default ({ currentSearch, setCurrentSearch }) => {
                                 type="text"
                                 value={searchValue}
                                 onChange={handleChange}
-                                onKeyPress={handleKeyPress}
+                                onKeyDown={handleKeyPress}
                                 placeholder="Search"
                             />
                         </form>

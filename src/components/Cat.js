@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { ChevronDownIcon } from '@heroicons/react/solid'
 
-const CategoryFilter4 = () => {
+const CategoryFilter4 = ({ currentSearch, setCurrentSearch }) => {
   const dropdownRef = useRef(null);
   const [products, setProducts] = useState([]);
   const [selectedColor, setSelectedColor] = useState('');
@@ -95,10 +95,11 @@ const CategoryFilter4 = () => {
   const filteredProducts = products.filter((product) => {
     
     return (
-      (product.color === selectedColor || selectedColor === '') &&
-      (product.size === selectedSize || selectedSize === '')
-          && (parseInt(product.price.replace("$", "")) >= parseInt(selectedPrice.min) || selectedPrice.min === '')
-          && (parseInt(product.price.replace("$", "")) <= parseInt(selectedPrice.max) || selectedPrice.max === '')
+      (product.color === selectedColor || selectedColor === '')
+      && (product.size === selectedSize || selectedSize === '')
+      && (parseInt(product.price.replace("$", "")) >= parseInt(selectedPrice.min) || selectedPrice.min === '')
+      && (parseInt(product.price.replace("$", "")) <= parseInt(selectedPrice.max) || selectedPrice.max === '')
+      && (product.name.toLowerCase().includes(currentSearch.toLowerCase()) || currentSearch === '')
     );
   });
 

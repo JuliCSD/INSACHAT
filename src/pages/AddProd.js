@@ -1,4 +1,5 @@
     import React, { useState } from 'react';
+    import { ChevronLeftIcon } from '@heroicons/react/solid'
 
     function AddProd() { 
 
@@ -46,20 +47,37 @@
 
         <body class="w-full py-10 px-1 sm:px-5 flex flex-col items-center bg-gradient-to-t from-white via-rose to-rose-200 font-body">
             <div class="container mx-auto" >  
+            
                 <div class="flex justify-center px-6 my-12">
-                    <div class="w-full xl:w-3/4 lg:w-11/12 flex justify-center overflow-hidden">
-                        <div class="w-full lg:w-7/12 bg-white p-5 rounded-2xl rounded-l-none">
-                            <h3 class="pt-4 text-2xl text-center">Vendre</h3>
+                    
+                    <div class="w-full flex justify-center overflow-hidden  ">
 
-                            <form class="w-full max-w-sm" onSubmit={handleSubmit}>
+
+                        
+                        <div class="w-1/2 bg-white p-5 rounded-2xl flex justify-center shadow-2xl ">
+            
+
+                        <a href="/" 
+                        class="justify-start">
+                            <button className="flex items-center space-x-1 text-gray-600 hover:text-rose-800 py-4 px-6">
+                            <ChevronLeftIcon className="w-5 h-5" />
+                            <span>Back</span>
+                        
+                            </button>
+                             </a>
+
+                        
+ 
+
+                            <form class="w-full max-w-sm " onSubmit={handleSubmit}>
                                 <div>
                                     <div>
-                                        <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" >
+                                        <label class="block text-gray-500 font-bold md:text-left mb-1 pr-4" >
                                             Nom
                                         </label>
                                     </div>
 
-                                    <div class="md:w-2/3">
+                                    <div class=" ">
                                     <input
                                     className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                                     name="name"
@@ -122,7 +140,7 @@
 
                                 <div>
                                     <div>
-                                        <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4" >
+                                        <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4" >
                                             Taille
                                             
                                         </label>
@@ -152,7 +170,6 @@
                                             Description
                                         </label>
                                         <textarea class=" no-resize appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-48 resize-none" id="description" placeholder="Très peu portées, pas de défaut grave, en très bon état ... "></textarea>
-                                        <p class="text-gray-600 text-xs italic">Re-size can be disabled by set by resize-none / resize-y / resize-x / resize</p>
                                     </div>
                                 </div>
                                 <br></br>
@@ -164,28 +181,23 @@
                                         </label>
                                     </div>
 
-                                    <form action="#" class="relative w-4/5 h-32 max-w-xs mb-10 bg-white bg-gray-100 rounded-lg shadow-inner">
+                                    <form action="#" class="relative w-4/5 max-w-xs mb-10 bg-white bg-gray-100 rounded-lg shadow-inner">
                                         <input type="file" id="file-upload" class="hidden" onChange={handleFileUpload} />
                                         <label for="file-upload" class="z-20 flex flex-col-reverse items-center justify-center w-full h-full cursor-pointer">
-                                            <p class="z-10 text-xs font-light text-center text-gray-500">Drag & Drop your files here</p>
+                                            <p class="z-10 text-s font-light text-center text-gray-500">Téléchargez votre photo ici</p>
                                             <svg class="z-10 w-8 h-8 text-indigo-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
                                             </svg>
                                         </label>
                                     </form>
 
-                                    <button class="shadow bg-rose-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
-                                        Télécharger photos
-                                    </button>
-                                    
 
                                 </div>   
-                                <br></br>
-                                <br></br>
+                         
 
                                 <div class="md:flex md:items-center">
-                                    <div class="md:w-1/3"></div>
-                                        <div class="md:w-2/3">
+                                    <div class=""></div>
+                                        <div class="">
                                         <button
                                         className="shadow bg-rose-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                                         type="submit"

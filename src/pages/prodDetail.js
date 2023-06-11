@@ -8,7 +8,7 @@ import axios from 'axios'
 
 //il faudra implémenter la DB ici
 
-const ProdDetail = () => {
+const ProdDetail = ({ currentSearch, setCurrentSearch }) => {
 
   const { id } = useParams();
 
@@ -59,12 +59,12 @@ const ProdDetail = () => {
 
   return (
     <>
-    <Navbar />
+    <Navbar currentSearch={currentSearch} setCurrentSearch={setCurrentSearch}/>
     <div className="mx-auto py-8 px-4 w-full max-w-7xl bg-white">
       <div className="mx-auto max-w-2xl lg:max-w-none grid grid-cols-2 gap-x-5">
 
         {/* :PRODUCT PICTURE */}
-        <div className="order-first lg:order-last col-span-full lg:col-span-1 relative shadow-2xl roundes-2xl ">
+        <div className="order-first lg:order-last col-span-full lg:col-span-1 relative shadow-2xl rounded-2xl ">
           <img src={prod.imageSrc} alt={prod.imageAlt} className="object-contain w-full h-80 lg:h-full rounded-2xl hover:scale-110 ease-in-out duration-300" />
         </div>
 
