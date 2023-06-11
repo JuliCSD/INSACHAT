@@ -5,6 +5,7 @@ import CreerCompte from "./pages/CreerCompte";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/CreationCompte";
 import NotFound from "./pages/NotFound";
+import AddProd from "./pages/AddProd"
 
 
 
