@@ -7,6 +7,8 @@ import Cat from "../components/Cat";
 
 
 const Home = () => {
+  const [currentSearch, setCurrentSearch] = useState('');
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -25,7 +27,7 @@ const Home = () => {
     
     <>
     
-    <Navbar />
+    <Navbar currentSearch={currentSearch} setCurrentSearch={setCurrentSearch}/>
     
     
     <Cat />

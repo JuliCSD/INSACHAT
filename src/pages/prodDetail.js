@@ -64,8 +64,8 @@ const ProdDetail = () => {
       <div className="mx-auto max-w-2xl lg:max-w-none grid grid-cols-2 gap-x-5">
 
         {/* :PRODUCT PICTURE */}
-        <div className="order-first lg:order-last col-span-full lg:col-span-1 relative shadow-2xl roundes-2xl hover:scale-125 ease-in-out duration-300">
-          <img src={prod.imageSrc} alt={prod.imageAlt} className="object-contain w-full h-80 lg:h-full rounded-2xl" />
+        <div className="order-first lg:order-last col-span-full lg:col-span-1 relative shadow-2xl roundes-2xl ">
+          <img src={prod.imageSrc} alt={prod.imageAlt} className="object-contain w-full h-80 lg:h-full rounded-2xl hover:scale-110 ease-in-out duration-300" />
         </div>
 
 

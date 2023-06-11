@@ -26,7 +26,7 @@
           };
         
           const handleSubmit = (event) => {
-            event.preventDefault();
+            event.preventDefault(); 
             // Perform form submission logic here
             console.log(formData);
             // Reset the form data
@@ -83,6 +83,7 @@
                                         id="inline-number" 
                                         type="number" 
                                         placeholder="10"
+                                        name="price"
                                         value={formData.price}
                                         onChange={handleInputChange}
                                         />
@@ -100,7 +101,12 @@
                                     </div>
                                     <div class="md:w-2/3 grid grid-cols-2 gap-2">
                                         
-                                        <select class=" bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder='Couleur'>
+                                        <select 
+                                        
+
+                                        name="color"
+                                        onChange={handleInputChange}
+                                        class=" bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder='Couleur'>
                                             <option></option>
                                             <option>Noir</option>
                                             <option>Jaune</option>
@@ -122,7 +128,10 @@
                                         </label>
                                     </div>
                                     <div class="md:w-2/3 grid grid-cols-2 gap-2">
-                                        <select class=" bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder='Couleur'>
+                                        <select 
+                                        name="size"
+                                        onChange={handleInputChange}
+                                        class=" bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder='Couleur'>
                                             <option></option>
                                             <option>XS</option>
                                             <option>S</option>
@@ -180,6 +189,7 @@
                                         <button
                                         className="shadow bg-rose-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                                         type="submit"
+                                       
                                         >
                                             Valider
                                         </button>

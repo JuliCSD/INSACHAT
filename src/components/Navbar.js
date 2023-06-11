@@ -1,14 +1,27 @@
 import { useState, useRef, useEffect } from "react"
 import logo from '../images/logo.png'
-import logo_fav from '../images/logoFav.png'
+import fav from '../images/fav.png'
 
 
-export default () => {
+export default ({ currentSearch, setCurrentSearch }) => {
 
     const [menuState, setMenuState] = useState(false)
+    const [searchValue, setSearchValue] = useState('');
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            console.log('enter');
+            setCurrentSearch(searchValue);
+        }
+    };
+
+    const handleChange = (event) => {
+        setSearchValue(event.target.value);
+        console.log(currentSearch);
+    };
 
   const navigation = [
-      { title: "Vendre un objet", path: "javascript:void(0)" },
+      { title: "Vendre un objet", path: "/AddProd" },
   ]
     return (
         <nav className="bg-white border-b py-0">
@@ -44,6 +57,9 @@ export default () => {
                             <input
                                 className="w-full outline-none appearance-none placeholder-gray-500 text-gray-500 sm:w-auto"
                                 type="text"
+                                value={searchValue}
+                                onChange={handleChange}
+                                onKeyPress={handleKeyPress}
                                 placeholder="Search"
                             />
                         </form>
@@ -51,8 +67,9 @@ export default () => {
                             <div className="flex-none w-10 h-10 lg:flex-initial">
                                 <a href="/">
                                     <img
-                                    src="logo_fav"
-                                    className="w-full h-full rounded-full"
+                                    src={fav}
+                    
+                                    className="w-full h-full rounded-xl hover:transparency-50"
                                     />
                                 </a>
                             </div>
