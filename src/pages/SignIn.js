@@ -17,14 +17,7 @@ const SignForm2 = () => {
       console.log('no token');
     } else {
       console.log('token found');
-      axios.get('http://localhost:5000/verifyToken', { headers: { "x-access-token": token } })
-      .then(response => {
-          console.log(response);
-          navigate('/');
-      })
-      .catch(error => {
-          localStorage.removeItem('token');
-      });
+      navigate('/');
     }
   }, []);
 

@@ -4,6 +4,8 @@ import Bottomalert from "../components/Bottomalert";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Cat from "../components/Cat";
+import axios from 'axios'
+
 
 
 const Home = ({ currentSearch, setCurrentSearch }) => {
@@ -14,6 +16,17 @@ const Home = ({ currentSearch, setCurrentSearch }) => {
       console.log('no token');
     } else {
       console.log('token found');
+      console.log(token);
+      axios.get(`http://localhost:5000/getName`,{
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(response => {
+        console.log(`Response from server: ${JSON.stringify(response.data)}`);
+      })
+      .catch(error => console.log(`Error getting name: ${error}`));
     }
   }, []);
 

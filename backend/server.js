@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const { MongoClient } = require('mongodb');
 const { ObjectId } = require('mongodb');
-
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
@@ -138,8 +137,40 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.get('/verifyToken', (req, res, next) =>  {
-  const token = req.headers['x-access-token'];
+app.get('/getName', verifyToken, async (req, res) => {
+  
+  const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority";
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db('insachat');
+    const collection = database.collection('users');
+
+    console.log("requesting name from",req.userId);
+    const query = { _id: new ObjectId(req.userId) };  // Create a query with the hardcoded ID
+  
+    const user = await collection.findOne(query);
+    if (!user) {
+      return res.status(404).send('No user found.');
+    }
+    console.log(`Found user in database: ${JSON.stringify(user)}`);
+
+    // Assume 'favorites' is an array of favorite items stored in the user document
+    res.status(200).send(user.nom);
+  } catch (error) {
+    console.error('An error occurred while attempting to connect to MongoDB', error);
+    res.status(500).send(error);
+  } finally {
+    await client.close();
+  }
+});
+
+function verifyToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  //const token = req.headers['x-access-token'];
+  console.log(token);
   if (!token)
       return res.status(403).send({ auth: false, message: 'No token provided.' });
 
@@ -149,13 +180,9 @@ app.get('/verifyToken', (req, res, next) =>  {
     
       // if everything good, save to request for use in other routes
       req.userId = decoded.id;
-      console.log(`User with id ${req.userId} is authenticated`);
+      console.log(`User id decoded : ${req.userId}`);
       next();
   });
-});
-
-/* app.get('/favorites', verifyToken, (req, res) => {
-  // Code to fetch and return favorite items from the database
-}); */
+}
 
 app.listen(5000, () => console.log('Server is running on port 5000'));

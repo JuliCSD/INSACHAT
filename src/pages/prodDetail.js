@@ -35,9 +35,15 @@ const ProdDetail = () => {
       .catch(error => console.log(`Error getting product: ${error}`));
   }
   
-
   useEffect(() => {
     readProduct();
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('no token');
+    } else {
+      console.log('token found');
+      console.log(token);
+    }
   }, []);
   
   const product = {
