@@ -100,6 +100,30 @@ app.post('/addUser', async (req, res) => {
   }
 });
 
+app.post('/addProduct', async (req, res) => {
+  const product = req.body;
+
+  console.log('Received a request to add a product'); // Logs when a request is received
+
+  const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority"
+  //const uri = 'mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/';
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db('insachat');
+    const collection = database.collection('annonces');
+
+    const result = await collection.insertOne(product);
+    
+    res.status(200).send(`New product added with the following id: ${result.insertedId}`);
+  } catch (error) {
+    res.status(500).send(error);
+  } finally {
+    await client.close();
+  }
+});
+
 app.post('/login', async (req, res) => {
   const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority"
   const client = new MongoClient(uri);

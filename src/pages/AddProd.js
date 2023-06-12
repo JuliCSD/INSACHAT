@@ -1,5 +1,6 @@
     import React, { useState } from 'react';
     import { ChevronLeftIcon } from '@heroicons/react/solid'
+    import axios from 'axios';
 
     function AddProd() { 
 
@@ -9,6 +10,7 @@
             color: '',
             size: '',
             description: '',
+            owner:'',
             photos: null,
           });
 
@@ -18,6 +20,29 @@
               [event.target.name]: event.target.value,
             });
           };
+
+          const addProduct = (event) => {
+            event.preventDefault(); 
+            // Perform form submission logic here
+            console.log(formData);
+            const product = {
+              ...formData,
+            };
+            axios.post('http://localhost:5000/addProduct', product)
+              .then(response => {
+                console.log(response);
+                setFormData({
+                    name: '',
+                    price: '',
+                    color: '',
+                    size: '',
+                    description: '',
+                    owner:'',
+                    photos: null,
+                });
+              })
+              .catch(error => console.log(error));
+          }
         
           const handleFileUpload = (event) => {
             setFormData({
@@ -26,7 +51,7 @@
             });
           };
         
-          const handleSubmit = (event) => {
+/*           const handleSubmit = (event) => {
             event.preventDefault(); 
             // Perform form submission logic here
             console.log(formData);
@@ -37,9 +62,10 @@
               color: '',
               size: '',
               description: '',
+              owner:'',
               photos: null,
             });
-          };
+          }; */
          
  
         
@@ -69,7 +95,7 @@
                         
  
 
-                            <form class="w-full max-w-sm " onSubmit={handleSubmit}>
+                            <form class="w-full max-w-sm " onSubmit={addProduct}>
                                 <div>
                                     <div>
                                         <label class="block text-gray-500 font-bold md:text-left mb-1 pr-4" >
@@ -123,6 +149,7 @@
                                         
 
                                         name="color"
+                                        value={formData.color}
                                         onChange={handleInputChange}
                                         class=" bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder='Couleur'>
                                             <option></option>
@@ -148,8 +175,9 @@
                                     <div class="md:w-2/3 grid grid-cols-2 gap-2">
                                         <select 
                                         name="size"
+                                        value={formData.size}
                                         onChange={handleInputChange}
-                                        class=" bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder='Couleur'>
+                                        class=" bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder='Taille'>
                                             <option></option>
                                             <option>XS</option>
                                             <option>S</option>
@@ -169,7 +197,7 @@
                                         <label class="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4">
                                             Description
                                         </label>
-                                        <textarea class=" no-resize appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-48 resize-none" id="description" placeholder="Très peu portées, pas de défaut grave, en très bon état ... "></textarea>
+                                        <textarea class=" no-resize appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-48 resize-none" name="description" onChange={handleInputChange} value={formData.description} id="description" placeholder="Très peu portées, pas de défaut grave, en très bon état ... "></textarea>
                                     </div>
                                 </div>
                                 <br></br>
