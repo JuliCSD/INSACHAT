@@ -71,13 +71,6 @@ const ProdDetail = () => {
       })
       .catch((error) => console.log(`Error getting info from owner: ${error}`));
   };
-
-  useEffect(() => {
-    if (prod.owner) {
-      getInfo(prod.owner);
-      console.log("product owner id is : ",prod.owner);
-    }
-  }, [prod.owner]);
   
   useEffect(() => {
     readProduct();
@@ -90,6 +83,13 @@ const ProdDetail = () => {
       console.log(token);
     }
   }, []);
+
+  useEffect(() => {
+    if (prod.owner) {
+      getInfo(prod.owner);
+      console.log("product owner id is : ",prod.owner);
+    }
+  }, [prod.owner]);
   
 
 
@@ -122,7 +122,7 @@ const ProdDetail = () => {
                   <div className="pl-5 pr-3 flex items-center">
                       {/* :: Owner */}
                     <div className="flex items-center">
-                      <p className="pr-5 border-gray-200 text-gray-700 font-medium">Vendeur: </p>
+                      <p className="pr-5 border-gray-200 text-gray-700 font-medium">Vendeur: {owner.prenom+" "+owner.nom} </p>
                       </div>
 
                   </div>
@@ -141,7 +141,7 @@ const ProdDetail = () => {
                 </div>
                 {/* ::additional info owner */}
                 <div className="mt-5 flex items-center">
-                  <p className="pr-5 border-gray-200 text-gray-700 font-medium">Contact email: </p>
+                  <p className="pr-5 border-gray-200 text-gray-700 font-medium">Contact email: {owner.email}</p>
                 </div>
               
 

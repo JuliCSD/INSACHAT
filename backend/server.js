@@ -91,6 +91,35 @@ app.use(express.json());
     }
   });
 
+  app.get('/getInfo/:id', async (req, res) => {
+    console.log('Received a request to get a owner info'); // Logs when a request is received
+    const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority";
+    const client = new MongoClient(uri);
+  
+    try {
+      await client.connect();
+      const database = client.db('insachat');
+      const collection = database.collection('users');
+      
+      const query = { _id: new ObjectId(req.params.id) };  // Create a query with the hardcoded ID  
+      const user = await collection.findOne(query);
+      if (!user) {
+        return res.status(404).send('No user found.');
+      }
+      const owner= {
+        prenom: user.prenom,
+        nom: user.nom,
+        email: user.email,
+      }
+      res.status(200).send(owner);
+    } catch (error) {
+      console.error('An error occurred while attempting to connect to MongoDB', error);
+      res.status(500).send(error);
+    } finally {
+      await client.close();
+    }
+  });
+
 app.post('/addUser', async (req, res) => {
   const user = req.body;
   const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority"

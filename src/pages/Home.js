@@ -10,25 +10,30 @@ import axios from 'axios'
 
 const Home = ({ currentSearch, setCurrentSearch }) => {
 
-  useEffect(() => {
+  const verify = () => {
     const token = localStorage.getItem('token');
     if (!token) {
       console.log('no token');
-    } else {
-      console.log('token found');
-      console.log(token);
-      axios.get(`http://localhost:5000/getName`,{
+    }else{
+    const headers = {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      })
-      .then(response => {
-        console.log(`Response from server: ${JSON.stringify(response.data)}`);
-      })
-      .catch(error => console.log(`Error getting name: ${error}`));
+      }
+    axios.get(`http://localhost:5000/VerifyExpire`,headers)
+        .then(response => {
+            if(response.data === 'expired'){
+                console.log('expired');
+                localStorage.removeItem('token');
+            }
+        })
     }
-  }, []);
+};
+
+useEffect(() => {
+    verify();
+}, []);
 
 
   

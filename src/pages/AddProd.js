@@ -13,14 +13,13 @@
             size: '',
             description: '',
             owner:'',
-            photos: null,
+            imageSrc: '',
           });
 
         const navigate = useNavigate();
 
 
-          
-        useEffect(() => {
+        const verify = () => {
             const token = localStorage.getItem('token');
             if (!token) {
               console.log('no token');
@@ -40,7 +39,12 @@
                         navigate('/SignIn');
                     }
                 })
-        }}, []);
+            }
+        };
+        
+        useEffect(() => {
+            verify();
+        }, []);
         
           const handleInputChange = (event) => {
             setFormData({
@@ -73,7 +77,7 @@
                     size: '',
                     description: '',
                     owner:'',
-                    photos: null,
+                    imageSrc: '',
                 });
               })
               .catch(error => console.log(error));

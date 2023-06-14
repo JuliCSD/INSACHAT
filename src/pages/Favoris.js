@@ -4,10 +4,12 @@ import { useParams } from 'react-router-dom'
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 const Favoris= () => {
 
+    const navigate = useNavigate();
     const [prod, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -28,11 +30,33 @@ const Favoris= () => {
             });
         };
     
-    useEffect(() => {
-        readFavs();
+        const verify = () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+              console.log('no token');
+              navigate('/SignIn');
+            }else{
+            const headers = {
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            axios.get(`http://localhost:5000/VerifyExpire`,headers)
+                .then(response => {
+                    if(response.data === 'expired'){
+                        console.log('expired');
+                        localStorage.removeItem('token');
+                        navigate('/SignIn');
+                    }
+                })
+            }
+        };
+        
+        useEffect(() => {
+            verify();
+            readFavs();
         }, []);
-
-
     return (
 
         <>

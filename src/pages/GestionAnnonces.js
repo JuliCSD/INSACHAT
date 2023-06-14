@@ -8,20 +8,40 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import CatGestion from "../components/CatGestion";
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 
 
 const GestionAnnonces = ({ currentSearch, setCurrentSearch }) => {
 
-  useEffect(() => {
+  const navigate = useNavigate();
+
+  const verify = () => {
     const token = localStorage.getItem('token');
     if (!token) {
       console.log('no token');
-    } else {
-      console.log('token found');
-      console.log(token);
+      navigate('/SignIn');
+    }else{
+    const headers = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    axios.get(`http://localhost:5000/VerifyExpire`,headers)
+        .then(response => {
+            if(response.data === 'expired'){
+                console.log('expired');
+                localStorage.removeItem('token');
+                navigate('/SignIn');
+            }
+        })
     }
-  }, []);
+};
+
+useEffect(() => {
+    verify();
+}, []);
 
   return (
 

@@ -1,6 +1,8 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useEffect } from "react";
 
 const AccountPage = () => {
     
@@ -10,6 +12,33 @@ const AccountPage = () => {
         localStorage.removeItem('token');
         navigate('/');
     }
+
+    const verify = () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.log('no token');
+          navigate('/SignIn');
+        }else{
+        const headers = {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        axios.get(`http://localhost:5000/VerifyExpire`,headers)
+            .then(response => {
+                if(response.data === 'expired'){
+                    console.log('expired');
+                    localStorage.removeItem('token');
+                    navigate('/SignIn');
+                }
+            })
+        }
+    };
+    
+    useEffect(() => {
+        verify();
+    }, []);
 
     const handlePageProduct = () => {
         navigate('/GestionAnnonces');
