@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import Footer from "../components/Footer.js"
 import Navbar from '../components/Navbar.js'
 import axios from 'axios'
+import fav from '../images/fav.png';
 
 //il faudra implémenter la DB ici
 
@@ -128,6 +129,14 @@ const ProdDetail = () => {
                   <p className="pr-5 border-gray-200 text-gray-700 font-medium">Taille: {product.Taille}</p>
                 </div>
                   
+              </div>
+              <div className='py-10'>
+                <button>
+                  <img src={fav}
+                    
+                    className="w-14 h-14 hover:transparency-50"
+                    />
+                </button>
               </div>
             </div>  
         </div>

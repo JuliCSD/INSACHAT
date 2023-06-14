@@ -69,7 +69,7 @@ export default () => {
                         </form>
                         <div className="flex-1 flex items-center justify-end space-x-4 sm:space-x-6 px-4">
                             <div className="flex-none w-10 h-10 lg:flex-initial">
-                                <a href="/">
+                                <a href="/favoris">
                                     <img
                                     src={fav}
                     
