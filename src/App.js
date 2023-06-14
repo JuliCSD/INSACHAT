@@ -9,6 +9,7 @@ import SignUp from "./pages/CreationCompte";
 import NotFound from "./pages/NotFound";
 import AddProd from "./pages/AddProd"
 import AccountPage from "./pages/AccountPage";
+import GestionAnnonces from "./pages/GestionAnnonces";
 
 import { Route, Routes } from "react-router-dom";
 
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
           <Route path="/maintenance" element={<NotFound />} />
           <Route path="/AccountPage" element={<AccountPage />} />
+          <Route path="/GestionAnnonces" element={<GestionAnnonces />} />
         </Routes>
       </main>
 

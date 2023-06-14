@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import { ChevronDownIcon } from '@heroicons/react/solid'
 
-const CategoryFilter4 = () => {
+const CategoryFilter4 = ( {gestion}) => {
   const dropdownRef = useRef(null);
   const [products, setProducts] = useState([]);
   const [selectedColor, setSelectedColor] = useState('');

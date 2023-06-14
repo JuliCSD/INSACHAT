@@ -115,7 +115,7 @@ const ProdDetail = () => {
 
               <button onClick={handleIconClick}>
               {isLiked ? (
-                <HeartFullIcon className="w-14 h-14 hover:transparency-50 text-red-500 scale-125" />
+                <HeartFullIcon className="w-14 h-14 hover:transparency-50 text-red-500 scale-125 " />
               ) : (
                 <HeartEmptyIcon className="w-14 h-14 hover:transparency-50 " />
               )}
