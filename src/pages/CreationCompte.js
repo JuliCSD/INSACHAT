@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Alert from '../components/alert';
+
 
 const SignUp = () => {
   const [userInput, setUserInput] = useState({
@@ -12,6 +14,8 @@ const SignUp = () => {
   });
 
   const [invalidEmail, setInvalidEmail] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleInputChange = (event) => {
     setUserInput({
@@ -37,6 +41,7 @@ const SignUp = () => {
             email: '',
             password: '',
           });
+          navigate('/');
         })
         .catch((error) => console.log(error));
     } else {
