@@ -42,7 +42,7 @@ const Home = ({ currentSearch, setCurrentSearch }) => {
     <Navbar currentSearch={currentSearch} setCurrentSearch={setCurrentSearch}/>
     
     
-    <Cat gestion="false" currentSearch={currentSearch} setCurrentSearch={setCurrentSearch}/>
+    <Cat currentSearch={currentSearch} setCurrentSearch={setCurrentSearch}/>
 
     <Footer />
     <div className="home">
