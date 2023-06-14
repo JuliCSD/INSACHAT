@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import Footer from "../components/Footer.js"
 import Navbar from '../components/Navbar.js'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 
 import { HeartIcon as HeartEmptyIcon } from '@heroicons/react/outline';
@@ -13,12 +14,28 @@ import { HeartIcon as HeartFullIcon } from '@heroicons/react/solid';
 //il faudra implémenter la DB ici
 
 const ProdDetail = () => {
+  const navigate = useNavigate();
 
-  const { id } = useParams();
+  const { id } = useParams(); 
   const [isLiked, setIsLiked] = useState(false);
+  const token = localStorage.getItem('token');
+  const header = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  }
 
   const handleIconClick = () => {
     setIsLiked(!isLiked);
+    if(isLiked){
+      axios.post(`http://localhost:5000/addFavorite/${id}`,{}, header)
+          .then(response => {
+            console.log(response);
+          })
+          .catch(error => console.log(error));
+      
+    }
   };
 
   const [prod, setProd] = useState({
@@ -32,23 +49,42 @@ const ProdDetail = () => {
     color: "",
   });
 
-  const readProduct = () => {
-    console.log(`Getting product with id: ${id}`);
-    
-    axios.get(`http://localhost:5000/readProduct/${id}`)
-      .then(response => {
+  const [owner, setOwner] = useState({
+    prenom: "",
+    nom: "",
+    email: "",
+  });
+
+  const readProduct = () => {  
+    axios
+      .get(`http://localhost:5000/readProduct/${id}`)
+      .then((response) => {
         setProd(response.data);
-        console.log(`Response from server: ${JSON.stringify(response.data)}`);
-        console.log(`Product in state: ${JSON.stringify(prod)}`);
       })
-      .catch(error => console.log(`Error getting product: ${error}`));
-  }
+      .catch((error) => console.log(`Error getting product: ${error}`));
+  };
+  
+  const getInfo = (owner) => {
+    axios.get(`http://localhost:5000/getInfo/${owner}`)
+      .then((response) => {
+        setOwner(response.data);
+      })
+      .catch((error) => console.log(`Error getting info from owner: ${error}`));
+  };
+
+  useEffect(() => {
+    if (prod.owner) {
+      getInfo(prod.owner);
+      console.log("product owner id is : ",prod.owner);
+    }
+  }, [prod.owner]);
   
   useEffect(() => {
     readProduct();
     const token = localStorage.getItem('token');
     if (!token) {
       console.log('no token');
+      navigate('/SignIn');
     } else {
       console.log('token found');
       console.log(token);

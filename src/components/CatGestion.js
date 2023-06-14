@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
-import ListProduits from './ListProduits';
+import { useLocation } from 'react-router-dom'; 
+import Gestion from './Gestion';
 import axios from 'axios';
 
 import { ChevronDownIcon } from '@heroicons/react/solid'
@@ -88,6 +88,7 @@ const CategoryFilter4 = () => {
       });
   };
 
+
   useEffect(() => {
     readAnnonces();
     document.addEventListener("click", handleClickOutside);
@@ -96,22 +97,21 @@ const CategoryFilter4 = () => {
     };
   }, []);
 
-  const filteredProducts = products.filter((product) => {
-    
-    return (
-      (product.color === selectedColor || selectedColor === '')
-      && (product.size === selectedSize || selectedSize === '')
-      && (parseInt(product.price.replace("$", "")) >= parseInt(selectedPrice.min) || selectedPrice.min === '')
-      && (parseInt(product.price.replace("$", "")) <= parseInt(selectedPrice.max) || selectedPrice.max === '')
-      && (searchQuery === null || product.name.toLowerCase().includes(searchQuery.toLowerCase()))
-    );
-  });
+  const filteredProducts = products.filter((product) => { 
+      return (
+        (product.color === selectedColor || selectedColor === '')
+        && (product.size === selectedSize || selectedSize === '')
+        && (parseInt(product.price.replace("$", "")) >= parseInt(selectedPrice.min) || selectedPrice.min === '')
+        && (parseInt(product.price.replace("$", "")) <= parseInt(selectedPrice.max) || selectedPrice.max === '')
+        && (searchQuery === null || product.name.toLowerCase().includes(searchQuery.toLowerCase()))
+      );
+
+    });
 
   return (
     <div className="relative">
       {isLoading && (
-        
-        <div className="absolute bg-white bg-opacity-60 z-10 h-full w-full flex items-center justify-center my-20 ">
+        <div className="absolute bg-white bg-opacity-60 z-10 h-full w-full flex items-center justify-center">
           <div className="flex items-center">
             <span className="text-3xl mr-4">Loading</span>
             <svg className="animate-spin h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -199,10 +199,13 @@ const CategoryFilter4 = () => {
         )}
       </div>  
             </div>
-            <div className="flex-grow ml-5 w-full flex items-center justify-around md:justify-between space-x-4"></div>
+          <div className="flex-grow ml-5 w-full flex items-center justify-around md:justify-between space-x-4"></div>
           </div>
 
-          <ListProduits products={filteredProducts} />
+            <div >
+              <Gestion products={filteredProducts} />
+            </div>
+
         </div>
       </div>
     </div>

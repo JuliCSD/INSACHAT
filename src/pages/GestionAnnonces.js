@@ -6,7 +6,7 @@ import { useState,useEffect } from "react";
 import Bottomalert from "../components/Bottomalert";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import Cat from "../components/Cat";
+import CatGestion from "../components/CatGestion";
 import axios from 'axios'
 
 
@@ -42,7 +42,7 @@ const GestionAnnonces = ({ currentSearch, setCurrentSearch }) => {
     <Navbar currentSearch={currentSearch} setCurrentSearch={setCurrentSearch}/>
     
     
-    <Cat gestion="true" currentSearch={currentSearch} setCurrentSearch={setCurrentSearch}/>
+    <CatGestion currentSearch={currentSearch} setCurrentSearch={setCurrentSearch}/>
 
     <Footer />
 
