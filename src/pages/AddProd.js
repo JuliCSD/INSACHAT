@@ -1,6 +1,8 @@
     import React, { useState } from 'react';
     import { ChevronLeftIcon } from '@heroicons/react/solid'
     import axios from 'axios';
+    import { useNavigate } from 'react-router-dom';
+    import { useEffect } from 'react';
 
     function AddProd() { 
 
@@ -14,6 +16,32 @@
             photos: null,
           });
 
+        const navigate = useNavigate();
+
+
+          
+        useEffect(() => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+              console.log('no token');
+              navigate('/SignIn');
+            }else{
+            const headers = {
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            axios.get(`http://localhost:5000/VerifyExpire`,headers)
+                .then(response => {
+                    if(response.data === 'expired'){
+                        console.log('expired');
+                        localStorage.removeItem('token');
+                        navigate('/SignIn');
+                    }
+                })
+        }}, []);
+        
           const handleInputChange = (event) => {
             setFormData({
               ...formData,
@@ -58,23 +86,6 @@
             });
           };
         
-/*           const handleSubmit = (event) => {
-            event.preventDefault(); 
-            // Perform form submission logic here
-            console.log(formData);
-            // Reset the form data
-            setFormData({
-              name: '',
-              price: '',
-              color: '',
-              size: '',
-              description: '',
-              owner:'',
-              photos: null,
-            });
-          }; */
-         
- 
         
         return ( 
 
