@@ -75,9 +75,16 @@ const CategoryFilter4 = () => {
       setSelected: setSelectedPrice,
     }
   ];
-  const readAnnonces = () => {
+  const readAnnoncesPostees = () => {
+    const token = localStorage.getItem('token');
+    console.log(token);
     axios
-      .get('http://localhost:5000/readAnnonces')
+      .get('http://localhost:5000/readAnnoncesPostees', {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         setProducts(response.data);
         setIsLoading(false); // Set isLoading to false after data is fetched
@@ -90,7 +97,7 @@ const CategoryFilter4 = () => {
 
 
   useEffect(() => {
-    readAnnonces();
+    readAnnoncesPostees();
     document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("click", handleClickOutside);
