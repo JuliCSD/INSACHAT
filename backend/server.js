@@ -5,6 +5,7 @@ const { ObjectId } = require('mongodb');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -114,14 +115,14 @@ app.post('/login', async (req, res) => {
     
       if (!user) {
           return res.status(404).send('No user found.');
-          console.log("No user found");
       }
+
       const passwordIsValid = user.password == req.body.password;
       //const passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
       if (!passwordIsValid) {
           return res.status(401).send({ auth: false, token: null });
-          console.log("Password is not valid");
       }
+
       const token = jwt.sign({ id: user._id }, 'your_secret_key_here', {
           expiresIn: 7200 // expires in 24 hours
       });

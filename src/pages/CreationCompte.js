@@ -56,9 +56,9 @@ const SignUp = () => {
           <div className="w-full xl:w-3/4 lg:w-11/12 flex justify-center overflow-hidden">
             <div className="relative hidden lg:block lg:col-span-1 w-full h-full bg-gray-200 rounded-2xl rounded-r-none">
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSguBrHalb_LqfqDkOK-zos1tJ5RFBPmwdMWueQrhjjnQ&s"
+                src="https://pixabay.com/get/gaac1c4d294e5ba90ff536c73e6d447b989ba09719a3be677cd98e27b9e56538acc30687710df466008fda198e13e7712.jpg"
                 alt=""
-                className="absolute w-full h-full object-contain"
+                className="absolute w-full h-full object-cover"
               />
             </div>
             <div className="w-full lg:w-7/12 bg-white p-5 rounded-2xl rounded-l-none">

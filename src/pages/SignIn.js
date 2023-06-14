@@ -3,9 +3,12 @@ import React, { useRef,useState, useEffect } from 'react'
 import { ChevronLeftIcon } from '@heroicons/react/solid'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import Alert from '../components/alert';
 
 const SignForm2 = () => {
   const navigate = useNavigate();
+  const [invalidLogin, setInvalidLogin] = useState(false);
+
 
   const [userInput, setUserInput] = useState({
     email: '',
@@ -34,6 +37,9 @@ const SignForm2 = () => {
   };
   axios.post('http://localhost:5000/login', user)
       .then(response => {
+
+        
+          
           console.log(response);
           localStorage.setItem('token', response.data.token); // store token in local storage
           console.log('token stored');
@@ -43,19 +49,26 @@ const SignForm2 = () => {
               password: '',
           });
           navigate('/');
+
+        
       })
-      .catch(error => console.log(error));
+      .catch(error => setInvalidLogin(true));
     event.preventDefault();
   } 
 
 
   return (
     <div className="w-full py-10 px-1 sm:px-5 flex flex-col items-center bg-gradient-to-t from-white via-rose to-rose-200 font-body"> {/* Container */}
+     
+     {invalidLogin && (
+                  <Alert message="Email ou mot de passe erroné ! " />
+      )}
 
-
+      <div className='mt-8' />
 
       {/* :LOGIN CONTAINER */}
       <div className="w-full md:w-3/4 max-w-5xl grid grid-cols-2 border border-gray-200 rounded-2xl bg-white text-gray-500 shadow-2xl overflow-hidden">
+
 
         {/* ::Login Side */}
         <div className="col-span-2 lg:col-span-1 py-10 px-10">
@@ -147,8 +160,8 @@ const SignForm2 = () => {
         </div>
 
         {/* ::Illustration */}
-        <div className="relative hidden lg:block lg:col-span-1 w-full h-full bg-gray-200">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSguBrHalb_LqfqDkOK-zos1tJ5RFBPmwdMWueQrhjjnQ&s" alt="" className="absolute w-full h-full object-contain"/>
+        <div className="relative lg:col-span-1 w-full h-full ">
+          <img src="https://pixabay.com/get/gaac1c4d294e5ba90ff536c73e6d447b989ba09719a3be677cd98e27b9e56538acc30687710df466008fda198e13e7712.jpg" alt="" className="absolute w-full h-full object-cover"/>
         </div>
 
       </div>
