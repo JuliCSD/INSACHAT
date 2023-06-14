@@ -4,10 +4,10 @@ export default () => {
             <div className="max-w-screen-xl mx-auto px-4 flex items-center justify-start h-screen md:px-8">
                 <div className="max-w-lg mx-auto space-y-3 text-center">
                     <h3 className="text-gray-800 text-4xl font-semibold sm:text-5xl">
-                        Page non trouvée
+                        Fonctionalité en maintenance
                     </h3>
                     <p className="text-gray-600">
-                        Désolé, la page cherchée est indisponible.
+                        Désolé, la page cherchée est en maintenance.
                     </p>
                     <a href="/" className="text-indigo-600 duration-150 hover:text-indigo-400 font-medium inline-flex items-center gap-x-1">
                         Retour

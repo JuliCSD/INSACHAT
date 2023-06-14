@@ -8,6 +8,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/CreationCompte";
 import NotFound from "./pages/NotFound";
 import AddProd from "./pages/AddProd"
+import AccountPage from "./pages/AccountPage";
 
 import { Route, Routes } from "react-router-dom";
 
@@ -26,6 +27,8 @@ const App = () => {
           <Route path="/CreerCompte" element={<CreerCompte />} />
           <Route path="/AddProd" element={<AddProd />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/maintenance" element={<NotFound />} />
+          <Route path="/AccountPage" element={<AccountPage />} />
         </Routes>
       </main>
 

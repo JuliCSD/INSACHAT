@@ -78,7 +78,7 @@ export default () => {
                                 </a>
                             </div>
                             <div className="w-10 h-10 outline-none rounded-full ring-offset-2 ring-rose-500 ring-2 lg:focus:ring-rose-600">
-                                <a href="/">
+                                <a href={!localStorage.getItem('token') ? "/signin" : "/AccountPage"}>
                                     <img
                                     src="https://randomuser.me/api/portraits/men/78.jpg"
                                     className="w-full h-full rounded-full"
