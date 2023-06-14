@@ -26,6 +26,7 @@ export default () => {
 
   const navigation = [
       { title: "Vendre un objet", path: "/AddProd" },
+      { title: "Voir ses produits", path: "/GestionAnnonces" },
   ]
     return (
         <nav className="bg-white border-b py-0">

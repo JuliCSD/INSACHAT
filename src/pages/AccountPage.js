@@ -10,6 +10,10 @@ const AccountPage = () => {
         localStorage.removeItem('token');
         navigate('/');
     }
+
+    const handlePageProduct = () => {
+        navigate('/GestionAnnonces');
+    }
     
     return (
         <div>
@@ -17,9 +21,11 @@ const AccountPage = () => {
             <Navbar />
 
             <h1 className="font-serif text-4xl text-center font-bold pt-10 text-rose-500 border-rose-300">Account</h1>
-
-            <button onClick={handleLogOut} type="submit" class="text-white m-8 bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-rose-500 dark:hover:bg-rose-600 dark:focus:ring-rose-800">Log Out</button>
-
+            <div className="flex">
+                <button onClick={handleLogOut} type="submit" class="text-white m-8 bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-rose-500 dark:hover:bg-rose-600 dark:focus:ring-rose-800">Log Out</button>
+                <button onClick={handlePageProduct} type="submit" class="text-white m-8 bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-rose-500 dark:hover:bg-rose-600 dark:focus:ring-rose-800">See your products</button>
+            </div>
+            
             <form className="p-10 rounded bg-rose">
                 <h3 className="py-5 underline">Change your Mail Address</h3>
                 <div class="relative z-0 w-1/2 mb-6 flex">
