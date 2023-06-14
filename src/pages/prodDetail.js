@@ -5,14 +5,21 @@ import { useParams } from 'react-router-dom'
 import Footer from "../components/Footer.js"
 import Navbar from '../components/Navbar.js'
 import axios from 'axios'
-import fav from '../images/fav.png';
+
+
+import { HeartIcon as HeartEmptyIcon } from '@heroicons/react/outline';
+import { HeartIcon as HeartFullIcon } from '@heroicons/react/solid';
 
 //il faudra implémenter la DB ici
 
 const ProdDetail = () => {
 
   const { id } = useParams();
+  const [isLiked, setIsLiked] = useState(false);
 
+  const handleIconClick = () => {
+    setIsLiked(!isLiked);
+  };
 
   const [prod, setProd] = useState({
     _id: "",
@@ -49,8 +56,6 @@ const ProdDetail = () => {
   }, []);
   
 
-
-  const [selectedSize, setSelectedSize] = useState(null)
 
   return (
     <>
@@ -106,12 +111,15 @@ const ProdDetail = () => {
 
               </div>
               <div className='py-10'>
-                <button>
-                  <img src={fav}
-                    
-                    className="w-14 h-14 hover:transparency-50"
-                    />
-                </button>
+
+
+              <button onClick={handleIconClick}>
+              {isLiked ? (
+                <HeartFullIcon className="w-14 h-14 hover:transparency-50 text-red-500 scale-125" />
+              ) : (
+                <HeartEmptyIcon className="w-14 h-14 hover:transparency-50 " />
+              )}
+              </button>
               </div>
             </div>  
             
