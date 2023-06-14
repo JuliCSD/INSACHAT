@@ -1,14 +1,17 @@
+// afficher les annonces 
+// et una facon de sup anonce 
+
+
 import { useState,useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Bottomalert from "../components/Bottomalert";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import Cat from "../components/Cat";
+import CatGestion from "../components/CatGestion";
 import axios from 'axios'
 
 
 
-const Home = ({ currentSearch, setCurrentSearch }) => {
+const GestionAnnonces = ({ currentSearch, setCurrentSearch }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -30,9 +33,6 @@ const Home = ({ currentSearch, setCurrentSearch }) => {
     }
   }, []);
 
-
-  
-
   return (
 
 
@@ -42,16 +42,12 @@ const Home = ({ currentSearch, setCurrentSearch }) => {
     <Navbar currentSearch={currentSearch} setCurrentSearch={setCurrentSearch}/>
     
     
-    <Cat currentSearch={currentSearch} setCurrentSearch={setCurrentSearch}/>
+    <CatGestion currentSearch={currentSearch} setCurrentSearch={setCurrentSearch}/>
 
     <Footer />
-    <div className="home">
-    
-      <Bottomalert />
-    </div>
 
     </>
   );
 };
 
-export default Home;
+export default GestionAnnonces;
