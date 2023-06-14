@@ -54,7 +54,7 @@ app.get('/readDatabase', async (req, res) => {
     const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority"
     const client = new MongoClient(uri);
   
-    console.log(`Received request to get product with id: ${req.params.id}`);
+    //console.log(`Received request to get product with id: ${req.params.id}`);
     
     try {
       await client.connect();
@@ -64,7 +64,7 @@ app.get('/readDatabase', async (req, res) => {
       const query = { _id: new ObjectId(req.params.id) };  // Create a query with the hardcoded ID
   
       const produit = await collection.findOne(query);
-      console.log(`Found product in database: ${JSON.stringify(produit)}`);
+      //console.log(`Found product in database: ${JSON.stringify(produit)}`);
       
       res.status(200).send(produit);
     } catch (error) {
@@ -79,7 +79,7 @@ app.get('/readDatabase', async (req, res) => {
 app.post('/addUser', async (req, res) => {
   const user = req.body;
 
-  console.log('Received a request to add a user'); // Logs when a request is received
+  //console.log('Received a request to add a user'); // Logs when a request is received
 
   const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority"
   //const uri = 'mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/';
@@ -103,13 +103,13 @@ app.post('/addUser', async (req, res) => {
 app.post('/login', async (req, res) => {
   const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority"
   const client = new MongoClient(uri);
-  console.log('Received a request to login a user');
+  //console.log('Received a request to login a user');
 
   try {
       await client.connect();
       const database = client.db('insachat');
       const collection = database.collection('users');
-      console.log(req.body.email);
+      //console.log(req.body.email);
       const user = await collection.findOne({ email: req.body.email });
     
       if (!user) {
@@ -126,7 +126,7 @@ app.post('/login', async (req, res) => {
           expiresIn: 7200 // expires in 24 hours
       });
 
-      console.log(`User ${user.email} logged in successfully`);
+      //console.log(`User ${user.email} logged in successfully`);
     
       res.status(200).send({ auth: true, token: token });
   } catch (error) {
@@ -141,7 +141,7 @@ function verifyToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
   //const token = req.headers['x-access-token'];
-  console.log(token);
+  //console.log(token);
   if (!token)
       return res.status(403).send({ auth: false, message: 'No token provided.' });
 
@@ -151,7 +151,7 @@ function verifyToken(req, res, next) {
     
       // if everything good, save to request for use in other routes
       req.userId = decoded.id;
-      console.log(`User id decoded : ${req.userId}`);
+      //console.log(`User id decoded : ${req.userId}`);
       next();
   });
 }
@@ -159,8 +159,8 @@ function verifyToken(req, res, next) {
 app.post('/addProduct', verifyToken, async (req, res) => {
   const product = req.body;
 
-  console.log('Received a request to add a product'); // Logs when a request is received
-  console.log("requesting name from",req.userId);
+  //console.log('Received a request to add a product'); // Logs when a request is received
+  //console.log("requesting name from",req.userId);
   product.owner = req.userId;
 
   const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority"
@@ -179,6 +179,22 @@ app.post('/addProduct', verifyToken, async (req, res) => {
     res.status(500).send(error);
   } finally {
     await client.close();
+  }
+});
+
+app.get('/VerifyExpire', async (req, res) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  const decodedToken = jwt.decode(token, { complete: true });
+
+  const dateNow = new Date();
+
+  if (decodedToken.payload.exp < dateNow.getTime()/1000) {
+    res.status(200).send('expired');
+    //console.log("token expired");
+  } else {
+    res.status(200).send('not expired');
+    //console.log("token not expired");
   }
 });
 
@@ -210,34 +226,48 @@ app.get('/getName', verifyToken, async (req, res) => {
   }
 });
 
-app.get('/VerifyExpire', async (req, res) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  const decodedToken = jwt.decode(token, { complete: true });
+app.post('/addFavorite/:id', verifyToken, async (req, res) => {
 
-  const dateNow = new Date();
+  const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority";
+  const client = new MongoClient(uri);
 
-  if (decodedToken.payload.exp < dateNow.getTime()/1000) {
-    res.status(200).send('expired');
-    console.log("EXPIRED");
-  } else {
-    res.status(200).send('not expired');
-    console.log("NOT EXPIRED");
+  try {
+    await client.connect();
+    
+    const database = client.db('insachat');
+    const collection1 = database.collection('annonces');
+    const collection2 = database.collection('users');
+
+    const queryProd = { _id: new ObjectId(req.params.id) };
+    const prod = await collection1.findOne(queryProd);
+    if (!prod) {
+      return res.status(404).send('No user found.');
+    }
+
+    const queryUser = { _id: new ObjectId(req.userId) };  // Create a query with the hardcoded ID
+    const user = await collection2.findOne(queryUser);
+    if (!user) {
+      return res.status(404).send('No user found.');
+    }
+  
+    // Add the new product ID to the user's list of favorites
+    user.favoris.push(req.params.id);
+
+    const result = await collection2.updateOne(
+      { _id: new ObjectId(user._id) },
+      { $set: { favoris: user.favoris } }
+    );
+
+
+    res.status(200).send(`Product added to favorites for user with id: ${queryUser}`);
+  } catch (error) {
+    res.status(500).send(error);
+  } finally {
+    await client.close();
   }
 });
 
 
 
+
 app.listen(5000, () => console.log('Server is running on port 5000'));
-
-function isTokenExpired(token) {
-  const decodedToken = jwt.decode(token, { complete: true });
-
-  const dateNow = new Date();
-
-  if (decodedToken.exp < dateNow.getTime()) {
-    return true;
-  } else {
-    return false;
-  }
-}

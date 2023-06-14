@@ -9,6 +9,7 @@ const SignUp = () => {
     nom: '',
     email: '',
     password: '',
+    favoris : [],
   });
 
   const [invalidEmail, setInvalidEmail] = useState(false);
