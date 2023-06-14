@@ -22,13 +22,20 @@
           };
 
           const addProduct = (event) => {
+            const token = localStorage.getItem('token');
             event.preventDefault(); 
             // Perform form submission logic here
             console.log(formData);
             const product = {
               ...formData,
             };
-            axios.post('http://localhost:5000/addProduct', product)
+            const headers = {
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            axios.post('http://localhost:5000/addProduct', product,headers)
               .then(response => {
                 console.log(response);
                 setFormData({

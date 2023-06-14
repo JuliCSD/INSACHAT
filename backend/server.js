@@ -100,30 +100,6 @@ app.post('/addUser', async (req, res) => {
   }
 });
 
-app.post('/addProduct', async (req, res) => {
-  const product = req.body;
-
-  console.log('Received a request to add a product'); // Logs when a request is received
-
-  const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority"
-  //const uri = 'mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/';
-  const client = new MongoClient(uri);
-
-  try {
-    await client.connect();
-    const database = client.db('insachat');
-    const collection = database.collection('annonces');
-
-    const result = await collection.insertOne(product);
-    
-    res.status(200).send(`New product added with the following id: ${result.insertedId}`);
-  } catch (error) {
-    res.status(500).send(error);
-  } finally {
-    await client.close();
-  }
-});
-
 app.post('/login', async (req, res) => {
   const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority"
   const client = new MongoClient(uri);
@@ -161,35 +137,6 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.get('/getName', verifyToken, async (req, res) => {
-  
-  const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority";
-  const client = new MongoClient(uri);
-
-  try {
-    await client.connect();
-    const database = client.db('insachat');
-    const collection = database.collection('users');
-
-    console.log("requesting name from",req.userId);
-    const query = { _id: new ObjectId(req.userId) };  // Create a query with the hardcoded ID
-  
-    const user = await collection.findOne(query);
-    if (!user) {
-      return res.status(404).send('No user found.');
-    }
-    console.log(`Found user in database: ${JSON.stringify(user)}`);
-
-    // Assume 'favorites' is an array of favorite items stored in the user document
-    res.status(200).send(user.nom);
-  } catch (error) {
-    console.error('An error occurred while attempting to connect to MongoDB', error);
-    res.status(500).send(error);
-  } finally {
-    await client.close();
-  }
-});
-
 function verifyToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
@@ -208,5 +155,60 @@ function verifyToken(req, res, next) {
       next();
   });
 }
+
+app.post('/addProduct', verifyToken, async (req, res) => {
+  const product = req.body;
+
+  console.log('Received a request to add a product'); // Logs when a request is received
+  console.log("requesting name from",req.userId);
+  product.owner = req.userId;
+
+  const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority"
+  //const uri = 'mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/';
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db('insachat');
+    const collection = database.collection('annonces');
+
+    const result = await collection.insertOne(product);
+    
+    res.status(200).send(`New product added with the following id: ${result.insertedId}`);
+  } catch (error) {
+    res.status(500).send(error);
+  } finally {
+    await client.close();
+  }
+});
+
+app.get('/getName', verifyToken, async (req, res) => {
+  
+  const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority";
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db('insachat');
+    const collection = database.collection('users');
+
+    //console.log("requesting name from",req.userId);
+    const query = { _id: new ObjectId(req.userId) };  // Create a query with the hardcoded ID
+  
+    const user = await collection.findOne(query);
+    if (!user) {
+      return res.status(404).send('No user found.');
+    }
+
+    // Assume 'favorites' is an array of favorite items stored in the user document
+    res.status(200).send(user.nom);
+  } catch (error) {
+    console.error('An error occurred while attempting to connect to MongoDB', error);
+    res.status(500).send(error);
+  } finally {
+    await client.close();
+  }
+});
+
 
 app.listen(5000, () => console.log('Server is running on port 5000'));
