@@ -123,7 +123,7 @@ app.post('/login', async (req, res) => {
           console.log("Password is not valid");
       }
       const token = jwt.sign({ id: user._id }, 'your_secret_key_here', {
-          expiresIn: 86400 // expires in 24 hours
+          expiresIn: 7200 // expires in 24 hours
       });
 
       console.log(`User ${user.email} logged in successfully`);
@@ -210,5 +210,34 @@ app.get('/getName', verifyToken, async (req, res) => {
   }
 });
 
+app.get('/VerifyExpire', async (req, res) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  const decodedToken = jwt.decode(token, { complete: true });
+
+  const dateNow = new Date();
+
+  if (decodedToken.payload.exp < dateNow.getTime()/1000) {
+    res.status(200).send('expired');
+    console.log("EXPIRED");
+  } else {
+    res.status(200).send('not expired');
+    console.log("NOT EXPIRED");
+  }
+});
+
+
 
 app.listen(5000, () => console.log('Server is running on port 5000'));
+
+function isTokenExpired(token) {
+  const decodedToken = jwt.decode(token, { complete: true });
+
+  const dateNow = new Date();
+
+  if (decodedToken.exp < dateNow.getTime()) {
+    return true;
+  } else {
+    return false;
+  }
+}
