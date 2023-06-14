@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import ListProduits from './ListProduits';
+import Gestion from './Gestion';
 import axios from 'axios';
 
 import { ChevronDownIcon } from '@heroicons/react/solid'
@@ -96,16 +97,35 @@ const CategoryFilter4 = () => {
     };
   }, []);
 
+// Verifier si page gestion ou pas
+  const gestionValue=JSON.parse(gestion);
+  const showList = gestionValue ? "hidden ":"visible";
+  const showGestion = gestionValue ? "visible":"hidden ";
+ 
+
   const filteredProducts = products.filter((product) => {
-    
-    return (
-      (product.color === selectedColor || selectedColor === '')
-      && (product.size === selectedSize || selectedSize === '')
-      && (parseInt(product.price.replace("$", "")) >= parseInt(selectedPrice.min) || selectedPrice.min === '')
-      && (parseInt(product.price.replace("$", "")) <= parseInt(selectedPrice.max) || selectedPrice.max === '')
-      && (searchQuery === null || product.name.toLowerCase().includes(searchQuery.toLowerCase()))
-    );
-  });
+     
+    if(!gestionValue){
+      return (
+        (product.color === selectedColor || selectedColor === '')
+        && (product.size === selectedSize || selectedSize === '')
+        && (parseInt(product.price.replace("$", "")) >= parseInt(selectedPrice.min) || selectedPrice.min === '')
+        && (parseInt(product.price.replace("$", "")) <= parseInt(selectedPrice.max) || selectedPrice.max === '')
+        && (searchQuery === null || product.name.toLowerCase().includes(searchQuery.toLowerCase()))
+      );
+    }else{
+      return (
+        (product.color === selectedColor || selectedColor === '')
+        && (product.size === selectedSize || selectedSize === '')
+        && (parseInt(product.price.replace("$", "")) >= parseInt(selectedPrice.min) || selectedPrice.min === '')
+        && (parseInt(product.price.replace("$", "")) <= parseInt(selectedPrice.max) || selectedPrice.max === '')
+        && (searchQuery === null || product.name.toLowerCase().includes(searchQuery.toLowerCase()))
+        // && (token = id de la pers)
+      );
+    }
+
+    });
+
 
   return (
     <div className="relative">
@@ -199,10 +219,17 @@ const CategoryFilter4 = () => {
         )}
       </div>  
             </div>
-            <div className="flex-grow ml-5 w-full flex items-center justify-around md:justify-between space-x-4"></div>
+          <div className="flex-grow ml-5 w-full flex items-center justify-around md:justify-between space-x-4"></div>
           </div>
 
-          <ListProduits products={filteredProducts} />
+            <div className={showList}>
+              <ListProduits products={filteredProducts}/>
+            </div>
+
+            <div className={showGestion}>
+              <Gestion products={filteredProducts} />
+            </div>
+
         </div>
       </div>
     </div>
