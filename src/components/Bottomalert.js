@@ -16,10 +16,10 @@ const Banner2 = () => {
     <div className="fixed bottom-0 inset-x-0 w-full">
       <div className="relative mx-auto p-6 pr-20 w-full max-w-9xl flex flex-col sm:flex-row justify-center items-start sm:items-center bg-rose-100 bg-opacity-90 text-gray-800">
         {/* :TEXT LARGE SCREEN */}
-        <p className="hidden md:block text-base font-medium">Merci de tester insACHAT !</p>
+        <p className="hidden md:block text-base font-medium">Bienvenue sur insACHAT!</p>
         {/* :LEARN MORE LINK */}
-        <a href="/signin" className="flex-shrink-0 mt-2 sm:mt-0 sm:mx-3 inline-flex items-center text-base text-rose-500 font-semibold underline hover:text-green-800">
-          Essayer le Sign In !
+        <a href="/signup" className="flex-shrink-0 mt-2 sm:mt-0 sm:mx-3 inline-flex items-center text-base text-rose-500 font-semibold underline hover:text-green-800">
+          Creez un compte pour voir les annonces !
           <ArrowRightIcon className="relative top-0.5 ml-2 w-4 h-4" />
         </a>
         {/* :CLOSE BUTTON */}

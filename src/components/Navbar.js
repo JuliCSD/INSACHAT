@@ -8,6 +8,7 @@ export default () => {
 
     const [menuState, setMenuState] = useState(false)
     const [searchValue, setSearchValue] = useState('');
+    const [expandedSearch, setExpandedSearch] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (event) => {
@@ -16,6 +17,14 @@ export default () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+      };
+
+      const expandSearch = () => {
+        setExpandedSearch(true);
+      };
+    
+      const collapseSearch = () => {
+        setExpandedSearch(false);
       };
 
     const handleKeyPress = (event) => {
@@ -55,7 +64,13 @@ export default () => {
                         </ul>
                     </div>
                     
-                        <form onSubmit={handleSubmit} className="flex items-center space-x-2 border rounded-md p-2">
+                        <form onSubmit={handleSubmit}
+                        onClick={expandSearch}
+                        style={{
+                            maxWidth: expandedSearch ? "100%" : "150px",
+                            transition: "max-width 0.75s ease"
+                          }}
+                        className={` flex items-center space-x-2 border rounded-md p-2 w-full`}>
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 flex-none text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
@@ -66,6 +81,7 @@ export default () => {
                                 onChange={handleChange}
                                 onKeyDown={handleKeyPress}
                                 placeholder="Search"
+                                onBlur={collapseSearch} 
                             />
                         </form>
                         <div className="flex-1 flex items-center justify-end space-x-4 sm:space-x-6 px-4 ">

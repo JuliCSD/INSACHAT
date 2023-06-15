@@ -80,7 +80,7 @@ const SignUp = () => {
   };
 
   return (
-    <body className="w-full py-10 px-1 sm:px-5 flex flex-col items-center bg-gradient-to-t from-white via-rose to-rose-200 font-body">
+    <body className="w-full py-10 px-1 sm:px-5 flex flex-col items-center bg-[url('https://images.pexels.com/photos/2387819/pexels-photo-2387819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] bg-cover font-body">
      {invalidEmail && (
                   <Alert message="Email invalide. Utilisez un @insa-lyon.fr" />
                 )}

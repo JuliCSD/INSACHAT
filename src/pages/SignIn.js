@@ -58,7 +58,7 @@ const SignForm2 = () => {
 
 
   return (
-    <div className="w-full py-10 px-1 sm:px-5 flex flex-col items-center bg-gradient-to-t from-white via-rose to-rose-200 font-body"> {/* Container */}
+    <div className="w-full h-screen py-10 px-1 sm:px-5 flex flex-col items-center bg-[url('https://pixabay.com/get/g74d4571f3f0c32a68bf85c4c4436af6a828a51ccb4ab21b908bdf1be89519e4700558d7a878861d58de57e10bdb36dbf_1920.jpg')] "> {/* Container */}
      
      {invalidLogin && (
                   <Alert message="Email ou mot de passe erroné ! " />
