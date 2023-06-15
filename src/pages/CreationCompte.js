@@ -11,10 +11,12 @@ const SignUp = () => {
     nom: '',
     email: '',
     password: '',
+    c_password: '',
     favoris : [],
   });
 
   const [invalidEmail, setInvalidEmail] = useState(false);
+  const [invalidmdp, setinvalidemdp] = useState(false);
 
   const navigate = useNavigate();
 
@@ -29,6 +31,8 @@ const SignUp = () => {
     const user = {
       ...userInput,
     };
+    if(user.password == user.c_password){
+
     if (user.email.includes('@insa-lyon.fr')) {
      
 
@@ -67,6 +71,12 @@ const SignUp = () => {
       console.log('email pas ok');
       setInvalidEmail(true);
     }
+  }else{
+    console.log('password pas ok');
+    setinvalidemdp(true);
+
+  };
+
   };
 
   return (
@@ -74,6 +84,11 @@ const SignUp = () => {
      {invalidEmail && (
                   <Alert message="Email invalide. Utilisez un @insa-lyon.fr" />
                 )}
+
+      {invalidmdp && (
+                        <Alert message="Les mots de passe ne sont pas les mêmes !" />
+                      )}
+
      
       <div className="container mx-auto">
         <div className="flex justify-center px-6 my-12">
@@ -172,8 +187,11 @@ const SignUp = () => {
                     <input
                       className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                       id="c_password"
+                      name='c_password'
                       type="password"
                       placeholder="******************"
+                      value = {userInput.c_password}
+                      onChange={handleInputChange}
                     />
                   </div>
                 </div>
