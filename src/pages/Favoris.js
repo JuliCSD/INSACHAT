@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ListProduits from '../components/ListProduits';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -7,71 +8,83 @@ import axios from 'axios';
 
 const Favoris= () => {
 
-    const [listFavs, setFavs] = useState([])
-    const [products, setProducts] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+  
+  const token = localStorage.getItem('token');
+
+  const [listFavs, setFavs] = useState([])
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
 
-    const readFavs = (token) =>{
-        console.log(`Getting favorites of id:${token}`)
+  const readFavs = (token) =>{
+      console.log(`Getting favorites of id:${token}`)
 
-        axios
-      .get(`http://localhost:5000/readFavs/`,{
-        headers: {
+      axios
+    .get(`http://localhost:5000/readFavs/`,{
+      headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      },
+      },)
+    .then((response) => {
+      setFavs(response.data);
+      setIsLoading(false); // Set isLoading to false after data is fetched
+    })
+    .catch((error) => {
+      console.log(error);
+      setIsLoading(false); // Set isLoading to false on error as well
+    });
+};
+
+
+const readAnnonces = () => {
+  axios
+    .get('http://localhost:5000/readAnnonces')
+    .then((response) => {
+      setProducts(response.data);
+      console.log(listFavs)
+      setIsLoading(false); // Set isLoading to false after data is fetched
+    })
+    .catch((error) => {
+      console.log(error);
+      setIsLoading(false); // Set isLoading to false on error as well
+    });
+};  
+
+
+
+const verify = (token) => {
+  if (!token) {
+    console.log('no token');
+    navigate('/SignIn');
+  }else{
+  const headers = {
+      headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
-        },
-        },)
-      .then((response) => {
-        setFavs(response.data);
-        setIsLoading(false); // Set isLoading to false after data is fetched
+      },
+    }
+  axios.get(`http://localhost:5000/VerifyExpire`,headers)
+      .then(response => {
+          if(response.data === 'expired'){
+              console.log('expired');
+              localStorage.removeItem('token');
+              navigate('/SignIn');
+          }
       })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false); // Set isLoading to false on error as well
-      });
+  }
   };
 
 
-  const readAnnonces = () => {
-    axios
-      .get('http://localhost:5000/readAnnonces')
-      .then((response) => {
-        setProducts(response.data);
-        console.log(listFavs)
-        setIsLoading(false); // Set isLoading to false after data is fetched
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false); // Set isLoading to false on error as well
-      });
-  };  
-    
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-        console.log('no token');
-        } else {
-        console.log('token found');
-        console.log(token);
-        axios.get(`http://localhost:5000/getName`,{
-            headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-            },
-        })
-        .then(response => {
-            console.log(`Response from server: ${JSON.stringify(response.data)}`);
-        })
-        .catch(error => console.log(`Error getting name: ${error}`));
-        }
+  useEffect(() => {
+    verify(token);
+    readFavs(token);
+    readAnnonces();
 
-        readFavs(token);
-        readAnnonces();
+    }, []);
 
-        }, []);
-        const filteredProducts = products.filter((product) => listFavs.includes(product._id));
-        console.log(filteredProducts);
+  const filteredProducts = products.filter((product) => listFavs.includes(product._id));
 
 
 
