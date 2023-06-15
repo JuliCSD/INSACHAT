@@ -1,62 +1,93 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ListProduits from '../components/ListProduits';
-import { useParams } from 'react-router-dom'
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 
 const Favoris= () => {
 
-    const navigate = useNavigate();
-    const [prod, setProducts] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+  
+  const token = localStorage.getItem('token');
 
-    const { id } = useParams(); //c'est pas ça, faut récupérer le token du user
+  const [listFavs, setFavs] = useState([])
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
 
-    const readFavs = () =>{
-        console.log(`Getting favorites of id: ${id}`)
+  const readFavs = (token) =>{
+      console.log(`Getting favorites of id:${token}`)
 
-        axios.get(`http://localhost:5000/readFavoris/${id}`) //il faut créer la fonction readFavoris dans server.js
-            .then(response => {
-                setProducts(response.data);
-                setIsLoading(false);
-            })
-            .catch((error) => {
-              console.log(error);
-              setIsLoading(false); // Set isLoading to false on error as well
-            });
-        };
-    
-        const verify = () => {
-            const token = localStorage.getItem('token');
-            if (!token) {
-              console.log('no token');
+      axios
+    .get(`http://localhost:5000/readFavs/`,{
+      headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      },
+      },)
+    .then((response) => {
+      setFavs(response.data);
+      setIsLoading(false); // Set isLoading to false after data is fetched
+    })
+    .catch((error) => {
+      console.log(error);
+      setIsLoading(false); // Set isLoading to false on error as well
+    });
+};
+
+
+const readAnnonces = () => {
+  axios
+    .get('http://localhost:5000/readAnnonces')
+    .then((response) => {
+      setProducts(response.data);
+      console.log(listFavs)
+      setIsLoading(false); // Set isLoading to false after data is fetched
+    })
+    .catch((error) => {
+      console.log(error);
+      setIsLoading(false); // Set isLoading to false on error as well
+    });
+};  
+
+
+
+const verify = (token) => {
+  if (!token) {
+    console.log('no token');
+    navigate('/SignIn');
+  }else{
+  const headers = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  axios.get(`http://localhost:5000/VerifyExpire`,headers)
+      .then(response => {
+          if(response.data === 'expired'){
+              console.log('expired');
+              localStorage.removeItem('token');
               navigate('/SignIn');
-            }else{
-            const headers = {
-                headers: {
-                  'Content-Type': 'application/json',
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            axios.get(`http://localhost:5000/VerifyExpire`,headers)
-                .then(response => {
-                    if(response.data === 'expired'){
-                        console.log('expired');
-                        localStorage.removeItem('token');
-                        navigate('/SignIn');
-                    }
-                })
-            }
-        };
-        
-        useEffect(() => {
-            verify();
-            readFavs();
-        }, []);
+          }
+      })
+  }
+  };
+
+
+  useEffect(() => {
+    verify(token);
+    readFavs(token);
+    readAnnonces();
+
+    }, []);
+
+  const filteredProducts = products.filter((product) => listFavs.includes(product._id));
+
+
+
     return (
 
         <>
@@ -77,8 +108,8 @@ const Favoris= () => {
             )}
     
             <div className="mx-auto py-8 px-4 w-full max-w-7xl bg-white">
-            <div className="relative">    
-                <ListProduits products={prod} />
+            <div className="relative">
+              <ListProduits products={filteredProducts} />
             </div>
             </div>
         </div>
@@ -87,8 +118,8 @@ const Favoris= () => {
         <Footer />
         </>
         
-        );
-    };
+        )
+}
     
 export default Favoris;
     
