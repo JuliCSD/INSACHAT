@@ -68,8 +68,8 @@ export default () => {
                                 placeholder="Search"
                             />
                         </form>
-                        <div className="flex-1 flex items-center justify-end space-x-4 sm:space-x-6 px-4">
-                            <div className="flex-none w-10 h-10 lg:flex-initial">
+                        <div className="flex-1 flex items-center justify-end space-x-4 sm:space-x-6 px-4 ">
+                            <div className="flex-none w-10 h-10 lg:flex-initial hover:animate-bounce">
                                 <a href="/favoris">
                                     <img
                                     src={fav}
@@ -78,7 +78,7 @@ export default () => {
                                     />
                                 </a>
                             </div>
-                            <div className="w-10 h-10 outline-none rounded-full ring-offset-2 ring-rose-500 ring-2 lg:focus:ring-rose-600">
+                            <div className="w-10 h-10 hover:animate-spin outline-none rounded-full ring-offset-2 ring-rose-500 ring-2 lg:focus:ring-rose-600">
                                 <a href={!localStorage.getItem('token') ? "/signin" : "/AccountPage"}>
                                     <img
                                     src="https://randomuser.me/api/portraits/men/78.jpg"

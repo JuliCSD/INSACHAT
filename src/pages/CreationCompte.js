@@ -30,7 +30,7 @@ const SignUp = () => {
       ...userInput,
     };
     if (user.email.includes('@insa-lyon.fr')) {
-      console.log('email ok');
+     
 
       axios
         .post('http://localhost:5000/addUser', user)
@@ -42,7 +42,25 @@ const SignUp = () => {
             email: '',
             password: '',
           });
-          navigate('/');
+          const user = {
+            ...userInput,
+        };
+        axios.post('http://localhost:5000/login', user)
+            .then(response => {
+      
+              
+                
+                console.log(response);
+                localStorage.setItem('token', response.data.token); // store token in local storage
+                console.log('token stored');
+                console.log(response.data.token);
+              
+                navigate('/');
+      
+              
+            })
+          
+         
         })
         .catch((error) => console.log(error));
     } else {
@@ -60,7 +78,7 @@ const SignUp = () => {
       <div className="container mx-auto">
         <div className="flex justify-center px-6 my-12">
           <div className="w-full xl:w-3/4 lg:w-11/12 flex justify-center overflow-hidden">
-            <div className="relative hidden lg:block lg:col-span-1 w-full h-full bg-gray-200 rounded-2xl rounded-r-none">
+            <div className="relative col-span-1 w-full h-full bg-gray-200 rounded-2xl rounded-r-none">
               <img
                 src="https://pixabay.com/get/gaac1c4d294e5ba90ff536c73e6d447b989ba09719a3be677cd98e27b9e56538acc30687710df466008fda198e13e7712.jpg"
                 alt=""
@@ -68,7 +86,7 @@ const SignUp = () => {
               />
             </div>
             <div className="w-full lg:w-7/12 bg-white p-5 rounded-2xl rounded-l-none">
-              <h3 className="pt-4 text-2xl text-center">Crée ton compte !</h3>
+              <h3 className="pt-4 text-2xl text-center font-bold">Crée ton compte !</h3>
               <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
                 <div className="mb-4 md:flex md:justify-between">
                   <div className="mb-4 md:mr-2 md:mb-0">
@@ -161,7 +179,7 @@ const SignUp = () => {
                 </div>
                 <div className="mb-6 text-center">
                   <button
-                    className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+                    className="w-full px-4 py-2 font-bold text-white bg-rose-500 rounded-full hover:bg-rose-700 focus:outline-none focus:shadow-outline"
                     type="button"
                     onClick={addUser}
                   >
@@ -172,7 +190,7 @@ const SignUp = () => {
                 <hr className="mb-6 border-t" />
                 <div className="text-center">
                   <a
-                    className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
+                    className="inline-block text-sm text-blue-500 hover:text-blue-800"
                     href="#"
                   >
                     Mot de passe oublié ?
@@ -180,10 +198,19 @@ const SignUp = () => {
                 </div>
                 <div className="text-center">
                   <a
-                    className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
+                    className="inline-block text-sm text-blue-500 hover:text-blue-800"
                     href="/signin"
                   >
                     Déjà un compte ? Connecte toi !
+                  </a>
+                </div>
+
+                <div className="text-center mt-4">
+                  <a
+                    className="inline-block text-sm text-rose-500 hover:text-rose-800"
+                    href="/"
+                  >
+                    Retour à l'accueil
                   </a>
                 </div>
               </form>
