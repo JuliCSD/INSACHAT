@@ -127,6 +127,11 @@ app.post('/addUser', async (req, res) => {
 
   try {
     await client.connect();
+    // Generate a salt
+    const salt = await bcrypt.genSalt(10);
+    // Hash the password with the salt
+    const hash = await bcrypt.hash(user.password, salt);
+    user.password=hash;
     const database = client.db('insachat');
     const collection = database.collection('users');
 
@@ -153,7 +158,8 @@ app.post('/login', async (req, res) => {
           return res.status(404).send('No user found.');
       }
 
-      const passwordIsValid = user.password == req.body.password;
+      const passwordIsValid = await bcrypt.compare(req.body.password, user.password);
+      //const passwordIsValid = user.password == req.body.password;
       //const passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
       if (!passwordIsValid) {
           return res.status(401).send({ auth: false, token: null });
@@ -226,6 +232,36 @@ app.get('/VerifyExpire', async (req, res) => {
   } else {
     res.status(200).send('not expired');
     //console.log("token not expired");
+  }
+});
+
+
+app.get('/readFavs', verifyToken, async (req, res) => {
+  
+  const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority";
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    const database = client.db('insachat');
+    const collection = database.collection('users');
+
+    console.log("requesting favs from",req.userId);
+    const query = { _id: new ObjectId(req.userId) };  // Create a query with the hardcoded ID
+  
+    const user = await collection.findOne(query);
+    if (!user) {
+      return res.status(404).send('No user found.');
+    }
+    console.log(`Found user in database: ${JSON.stringify(user)}`);
+
+    // Assume 'favorites' is an array of favorite items stored in the user document
+    res.status(200).send(user.favoris);
+  } catch (error) {
+    console.error('An error occurred while attempting to connect to MongoDB', error);
+    res.status(500).send(error);
+  } finally {
+    await client.close();
   }
 });
 
