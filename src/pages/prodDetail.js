@@ -28,14 +28,6 @@ const ProdDetail = () => {
 
   const handleIconClick = () => {
     setIsLiked(!isLiked);
-    if(isLiked){
-      axios.post(`http://localhost:5000/addFavorite/${id}`,{}, header)
-          .then(response => {
-            console.log(response);
-          })
-          .catch(error => console.log(error));
-      
-    }
   };
 
   const [prod, setProd] = useState({
@@ -71,6 +63,18 @@ const ProdDetail = () => {
       })
       .catch((error) => console.log(`Error getting info from owner: ${error}`));
   };
+
+  useEffect(() => {
+    console.log(isLiked);
+    if(isLiked){
+      console.log("LIKED");
+      axios.post(`http://localhost:5000/addFavorite/${id}`,{}, header)
+          .then(response => {
+            console.log(response);
+          })
+          .catch(error => console.log(error));
+    }
+  }, [isLiked]);
   
   useEffect(() => {
     readProduct();

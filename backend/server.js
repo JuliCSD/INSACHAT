@@ -266,13 +266,12 @@ app.get('/readFavs', verifyToken, async (req, res) => {
 });
 
 app.post('/addFavorite/:id', verifyToken, async (req, res) => {
-
   const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority";
   const client = new MongoClient(uri);
 
   try {
     await client.connect();
-    
+
     const database = client.db('insachat');
     const collection1 = database.collection('annonces');
     const collection2 = database.collection('users');
@@ -283,20 +282,17 @@ app.post('/addFavorite/:id', verifyToken, async (req, res) => {
       return res.status(404).send('No user found.');
     }
 
-    const queryUser = { _id: new ObjectId(req.userId) };  // Create a query with the hardcoded ID
+    const queryUser = { _id: new ObjectId(req.userId) }; 
     const user = await collection2.findOne(queryUser);
     if (!user) {
       return res.status(404).send('No user found.');
     }
-  
-    // Add the new product ID to the user's list of favorites
-    user.favoris.push(req.params.id);
 
+    //$addToSet pour pas avoir de doublons
     const result = await collection2.updateOne(
       { _id: new ObjectId(user._id) },
-      { $set: { favoris: user.favoris } }
+      { $addToSet: { favoris: req.params.id } }
     );
-
 
     res.status(200).send(`Product added to favorites for user with id: ${queryUser}`);
   } catch (error) {
@@ -305,8 +301,6 @@ app.post('/addFavorite/:id', verifyToken, async (req, res) => {
     await client.close();
   }
 });
-
-
 
 
 app.listen(5000, () => console.log('Server is running on port 5000'));
