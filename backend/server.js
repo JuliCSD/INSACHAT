@@ -303,5 +303,42 @@ app.post('/addFavorite/:id', verifyToken, async (req, res) => {
   }
 });
 
+app.post('/updateName/:newName', verifyToken, async (req, res) => {
+  console.log("updating name to",req.params.newName);
+  const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority";
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+
+    const database = client.db('insachat');
+    //const collection1 = database.collection('annonces');
+    const collection2 = database.collection('users');
+
+/*     const queryProd = { _id: new ObjectId(req.params.id) };
+    const prod = await collection1.findOne(queryProd);
+    if (!prod) {
+      return res.status(404).send('No user found.');
+    }
+ */
+    const queryUser = { _id: new ObjectId(req.userId) }; 
+    const user = await collection2.findOne(queryUser);
+    if (!user) {
+      return res.status(404).send('No user found.');
+    }
+
+    //$addToSet pour pas avoir de doublons
+    const result = await collection2.updateOne(
+      { _id: new ObjectId(user._id) },
+      { $set: { nom: req.params.newName } }
+    );
+
+    res.status(200).send(`Product added to favorites for user with id: ${queryUser}`);
+  } catch (error) {
+    res.status(500).send(error);
+  } finally {
+    await client.close();
+  }
+});
 
 app.listen(5000, () => console.log('Server is running on port 5000'));
