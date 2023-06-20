@@ -46,7 +46,7 @@
             verify();
         }, []);
         
-          const handleInputChange = (event) => {
+                  const handleInputChange = (event) => {
             setFormData({
               ...formData,
               [event.target.name]: event.target.value,
@@ -58,37 +58,49 @@
             event.preventDefault(); 
             // Perform form submission logic here
             console.log(formData);
-            const product = {
-              ...formData,
+
+
+            //ver si img
+            const fileInput = document.getElementById('file-upload');
+            const file = fileInput.files[0]; 
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                const imageData = e.target.result; // Obtiene los datos de la imagen como una URL base64
+
+                const product = {
+                    ...formData,
+                    imageSrc: imageData, // Guarda la URL de la imagen en imageSrc
+                };
+
+                const headers = {
+                    headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                    },
+                }
+                axios.post('http://localhost:5000/addProduct', product,headers)
+                .then(response => {
+                    console.log(response);
+                    setFormData({
+                        name: '',
+                        price: '',
+                        color: '',
+                        size: '',
+                        description: '',
+                        owner:'',
+                        imageSrc: '',
+                    });
+                })
+                .catch(error => console.log(error));
             };
-            const headers = {
-                headers: {
-                  'Content-Type': 'application/json',
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            axios.post('http://localhost:5000/addProduct', product,headers)
-              .then(response => {
-                console.log(response);
-                setFormData({
-                    name: '',
-                    price: '',
-                    color: '',
-                    size: '',
-                    description: '',
-                    owner:'',
-                    imageSrc: '',
-                });
-              })
-              .catch(error => console.log(error));
+
+            reader.readAsDataURL(file);
           }
+        };
         
-          const handleFileUpload = (event) => {
-            setFormData({
-              ...formData,
-              photos: event.target.files[0],
-            });
-          };
         
         
         return ( 
@@ -238,6 +250,11 @@
                                             <svg class="z-10 w-8 h-8 text-indigo-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
                                             </svg>
+
+                                            {/*  */}
+                                            <img id="uploaded-image" class="hidden"/>
+
+
                                         </label>
                                     </form>
 
