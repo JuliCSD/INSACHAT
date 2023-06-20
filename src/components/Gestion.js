@@ -12,7 +12,7 @@ export default function Gestion({ products }) {
     console.log("PRODUIT ID");
     console.log(id);
     axios
-    .post(`http://localhost:5000/deleteProduct/${id}`)
+    .get(`http://localhost:5000/deleteProduct/${id}`)
     .then((response) => {
       console.log(response);
     })

@@ -71,6 +71,7 @@ app.use(express.json());
   });
   
   app.get('/deleteProduct/:id', async (req, res) => {
+    console.log('Received a request to delete a product',req.params.id); // Logs when a request is received
     const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority"
     const client = new MongoClient(uri);
     
@@ -92,7 +93,7 @@ app.use(express.json());
   });
 
   app.get('/getInfo/:id', async (req, res) => {
-    console.log('Received a request to get a owner info'); // Logs when a request is received
+    //console.log('Received a request to get a owner info'); // Logs when a request is received
     const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority";
     const client = new MongoClient(uri);
   
@@ -246,14 +247,14 @@ app.get('/readFavs', verifyToken, async (req, res) => {
     const database = client.db('insachat');
     const collection = database.collection('users');
 
-    console.log("requesting favs from",req.userId);
+    //console.log("requesting favs from",req.userId);
     const query = { _id: new ObjectId(req.userId) };  // Create a query with the hardcoded ID
   
     const user = await collection.findOne(query);
     if (!user) {
       return res.status(404).send('No user found.');
     }
-    console.log(`Found user in database: ${JSON.stringify(user)}`);
+    //console.log(`Found user in database: ${JSON.stringify(user)}`);
 
     // Assume 'favorites' is an array of favorite items stored in the user document
     res.status(200).send(user.favoris);
