@@ -46,7 +46,7 @@
             verify();
         }, []);
         
-                  const handleInputChange = (event) => {
+        const handleInputChange = (event) => {
             setFormData({
               ...formData,
               [event.target.name]: event.target.value,
@@ -100,6 +100,26 @@
             reader.readAsDataURL(file);
           }
         };
+
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                  const imageData = e.target.result;
+                  
+                  const uploadedImage = document.getElementById('uploaded-image');
+                  uploadedImage.src = imageData;
+                  uploadedImage.classList.remove('hidden');
+
+                  console.log(imageData);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
         
         
         
