@@ -303,6 +303,86 @@ app.post('/addFavorite/:id', verifyToken, async (req, res) => {
   }
 });
 
+
+app.post('/removeFavorite/:id', verifyToken, async (req, res) => {
+  const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority";
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+
+    const database = client.db('insachat');
+    const collection1 = database.collection('annonces');
+    const collection2 = database.collection('users');
+
+    const queryProd = { _id: new ObjectId(req.params.id) };
+    const prod = await collection1.findOne(queryProd);
+    if (!prod) {
+      return res.status(404).send('No user found.');
+    }
+
+    const queryUser = { _id: new ObjectId(req.userId) }; 
+    const user = await collection2.findOne(queryUser);
+    if (!user) {
+      return res.status(404).send('No user found.');
+    }
+
+    const result = await collection2.updateOne(
+      { _id: new ObjectId(user._id) },
+      { $pull: { favoris: req.params.id } }
+    );
+
+    res.status(200).send(`Product removed to favorites for user with id: ${queryUser}`);
+  } catch (error) {
+    res.status(500).send(error);
+  } finally {
+    await client.close();
+  }
+});
+
+
+app.get('/isFavorite/:id', verifyToken, async (req, res) => {
+  console.log('hello');
+  const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority";
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+
+    const database = client.db('insachat');
+    const collection1 = database.collection('annonces');
+    const collection2 = database.collection('users');
+
+    const queryProd = { _id: new ObjectId(req.params.id) };
+    const prod = await collection1.findOne(queryProd);
+    if (!prod) {
+      return res.status(404).send('No product found.');
+    }
+
+    const queryUser = { _id: new ObjectId(req.userId) }; 
+    const user = await collection2.findOne(queryUser);
+    if (!user) {
+      return res.status(404).send('No user found.');
+    }
+    const fav = await collection2.findOne({ _id: user._id, favoris: { $in: [req.params.id] } });
+
+    console.log(fav);
+    
+    if (fav) {
+      res.status(200).send(true);
+    } else {
+      res.status(200).send(false);
+    }
+  
+    // Fermer la connexion à MongoDB
+  } catch (error) {
+    res.status(500).send(error);
+  } finally {
+    await client.close();
+  }
+});
+
+
 app.post('/updateName/:newName', verifyToken, async (req, res) => {
   console.log("updating name to",req.params.newName);
   const uri = "mongodb+srv://mathias:Tu07mLbgapte2C1d@cluster0.eauxg6l.mongodb.net/?retryWrites=true&w=majority";

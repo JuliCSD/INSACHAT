@@ -18,6 +18,7 @@ const ProdDetail = () => {
 
   const { id } = useParams(); 
   const [isLiked, setIsLiked] = useState(false);
+  const [compteur, setCompteur]= useState(0);
   const token = localStorage.getItem('token');
   const header = {
     headers: {
@@ -64,16 +65,47 @@ const ProdDetail = () => {
       .catch((error) => console.log(`Error getting info from owner: ${error}`));
   };
 
+
+  const verifyFavorite = () =>{
+    console.log(id);
+    axios
+      .get(`http://localhost:5000/isFavorite/${id}`,{
+        headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+        },
+        },)
+      .then((response) => {
+        setIsLiked(response.data);
+      })
+      .catch((error) => console.log(`Error getting favorites: ${error}`))
+  }
+
   useEffect(() => {
     console.log(isLiked);
-    if(isLiked){
+    console.log(compteur);
+    if (compteur>0){
+      if(isLiked){
       console.log("LIKED");
       axios.post(`http://localhost:5000/addFavorite/${id}`,{}, header)
           .then(response => {
             console.log(response);
           })
           .catch(error => console.log(error));
+      }
+      else{
+        console.log("LIKED");
+        axios.post(`http://localhost:5000/removeFavorite/${id}`,{}, header)
+            .then(response => {
+              console.log(response);
+            })
+            .catch(error => console.log(error));
+      }
     }
+    else{
+      setCompteur(1);
+    }
+    
   }, [isLiked]);
   
   useEffect(() => {
@@ -86,6 +118,7 @@ const ProdDetail = () => {
       console.log('token found');
       console.log(token);
     }
+    //verifyFavorite();
   }, []);
 
   useEffect(() => {
