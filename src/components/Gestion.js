@@ -57,12 +57,12 @@ export default function Gestion({ products }) {
             <p className="text-gray-700 mb-4">{selectedProduct.description}</p>
 
             <div className="flex gap-4">
-              <button className="bg-gray-700 text-white px-4 py-2 rounded-md"onClick={()=>deleteProduct(selectedProduct._id)}>
+              <button className="bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-red-600"onClick={()=>deleteProduct(selectedProduct._id)}>
                 Effacer
               </button>
 
               <button
-                className="bg-gray-700 text-white px-4 py-2 rounded-md"
+                className="bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-500"
                 onClick={closePopup}
               >
                 Fermer
