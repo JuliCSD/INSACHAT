@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import imgrhino from '../images/rhino.jpg';
+import imgbggreen from '../images/bg.webp';
 import { useNavigate } from 'react-router-dom';
 
 import Alert from '../components/alert';
@@ -80,7 +82,7 @@ const SignUp = () => {
   };
 
   return (
-    <body className="w-full py-10 px-1 sm:px-5 flex flex-col items-center bg-[url('https://images.pexels.com/photos/2387819/pexels-photo-2387819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] bg-cover font-body">
+    <body className="w-full py-10 px-1 sm:px-5 flex flex-col items-center font-body" style={{ backgroundImage: `url(${imgbggreen})` }}>
      {invalidEmail && (
                   <Alert message="Email invalide. Utilisez un @insa-lyon.fr" />
                 )}
@@ -95,7 +97,7 @@ const SignUp = () => {
           <div className="w-full xl:w-3/4 lg:w-11/12 flex justify-center overflow-hidden">
             <div className="relative col-span-1 w-full h-full bg-gray-200 rounded-2xl rounded-r-none">
               <img
-                src="https://pixabay.com/get/gaac1c4d294e5ba90ff536c73e6d447b989ba09719a3be677cd98e27b9e56538acc30687710df466008fda198e13e7712.jpg"
+                src={imgrhino}
                 alt=""
                 className="absolute w-full h-full object-cover"
               />

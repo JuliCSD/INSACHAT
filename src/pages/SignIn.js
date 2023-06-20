@@ -3,6 +3,8 @@ import React, { useRef,useState, useEffect } from 'react'
 import { ChevronLeftIcon } from '@heroicons/react/solid'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import imgrhino from '../images/rhino.jpg';
+import imgbggreen from '../images/bg.webp';
 import Alert from '../components/alert';
 
 const SignForm2 = () => {
@@ -58,7 +60,7 @@ const SignForm2 = () => {
 
 
   return (
-    <div className="w-full h-screen py-10 px-1 sm:px-5 flex flex-col items-center bg-[url('https://pixabay.com/get/g74d4571f3f0c32a68bf85c4c4436af6a828a51ccb4ab21b908bdf1be89519e4700558d7a878861d58de57e10bdb36dbf_1920.jpg')] "> {/* Container */}
+<div className="w-full h-screen py-10 px-1 sm:px-5 flex flex-col items-center" style={{ backgroundImage: `url(${imgbggreen})` }}>
      
      {invalidLogin && (
                   <Alert message="Email ou mot de passe erroné ! " />
@@ -133,7 +135,7 @@ const SignForm2 = () => {
 
         {/* ::Illustration */}
         <div className="relative lg:col-span-1 w-full h-full ">
-          <img src="https://pixabay.com/get/gaac1c4d294e5ba90ff536c73e6d447b989ba09719a3be677cd98e27b9e56538acc30687710df466008fda198e13e7712.jpg" alt="" className="absolute w-full h-full object-cover"/>
+          <img src={imgrhino} alt="" className="absolute w-full h-full object-cover"/>
         </div>
 
       </div>
