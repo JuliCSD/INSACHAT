@@ -93,6 +93,10 @@
                         owner:'',
                         imageSrc: '',
                     });
+
+                    
+                    const uploadedImage = document.getElementById('uploaded-image');
+                    uploadedImage.classList.add('hidden');
                 })
                 .catch(error => console.log(error));
             };
